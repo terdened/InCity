@@ -1,0 +1,17 @@
+﻿@model InCity.Models.PlaceModel
+
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>Места:</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+    </dl>
+</div>
+<p>
+    <h4>@Html.DisplayFor(m => Model.mTitle)</h4>
+    @Html.DisplayFor(m => Model.mAddress)
+</p>

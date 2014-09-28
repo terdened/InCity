@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InCityDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Event">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Place" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+    <Property Name="PlaceId" Type="Int32" />
+    <NavigationProperty Name="Place1" Relationship="InCityDBModel.FK__Event__PlaceId__38996AB5" FromRole="Event" ToRole="Place" />
+  </EntityType>
+  <EntityContainer Name="InCityDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="City" EntityType="Self.City" />
+    <EntitySet Name="Event" EntityType="Self.Event" />
+    <EntitySet Name="Place" EntityType="InCityDBModel.Place" />
+    <AssociationSet Name="FK__Event__PlaceId__38996AB5" Association="InCityDBModel.FK__Event__PlaceId__38996AB5">
+      <End Role="Place" EntitySet="Place" />
+      <End Role="Event" EntitySet="Event" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Place">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Event" Relationship="InCityDBModel.FK__Event__PlaceId__38996AB5" FromRole="Place" ToRole="Event" />
+  </EntityType>
+  <Association Name="FK__Event__PlaceId__38996AB5">
+    <End Type="InCityDBModel.Place" Role="Place" Multiplicity="0..1" />
+    <End Type="InCityDBModel.Event" Role="Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Place">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="PlaceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

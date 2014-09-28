@@ -1,0 +1,32 @@
+﻿@model IEnumerable<InCity.Models.EventModels>
+
+@{
+    ViewBag.Title = "События";
+}
+
+<h2>События:</h2>
+
+<table class="table">
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <h4>@Html.DisplayFor(m => item.mTitle)</h4>
+            
+            @Html.DisplayFor(m => item.mDate)
+            <br />
+            @Html.DisplayFor(m => item.mDescription)
+            <br />
+            @if (item.mPlace.mId != 0)
+            { 
+                @Html.ActionLink(item.mPlace.mTitle, "Show", "Place", new { pId = item.mPlace.mId }, new { })
+            }
+            else
+            {
+                @Html.DisplayFor(m => item.mPlace.mAddress)
+            }
+        </td>
+    </tr>
+}
+
+</table>
