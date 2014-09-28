@@ -22,7 +22,7 @@ namespace InCity.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Наши контакты";
 
             return View();
         }

@@ -8,7 +8,7 @@ namespace InCity
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+            
         }
     }
 }

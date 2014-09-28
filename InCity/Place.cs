@@ -16,7 +16,7 @@ namespace InCity
     {
         public Place()
         {
-            this.Event = new HashSet<Event>();
+            this.EventPlace = new HashSet<EventPlace>();
         }
     
         public int Id { get; set; }
@@ -24,7 +24,7 @@ namespace InCity
         public string Address { get; set; }
         public Nullable<int> HeaderId { get; set; }
     
-        public virtual ICollection<Event> Event { get; set; }
         public virtual Pictures Pictures { get; set; }
+        public virtual ICollection<EventPlace> EventPlace { get; set; }
     }
 }

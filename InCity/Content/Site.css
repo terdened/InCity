@@ -22,3 +22,18 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.place-btn:link {
+    color: #0000d0; /* Цвет ссылок */
+    padding: 2px; /* Поля вокруг текста */
+    -webkit-filter: grayscale(80%);
+    -moz-transition: -webkit-filter 0.4s 0.1s ease;
+    -o-transition: -webkit-filter 0.4s 0.1s ease;
+    -webkit-transition: -webkit-filter 0.4s 0.1s ease;
+}
+
+.place-btn:hover {
+    background: #786b59; /* Цвет фона под ссылкой */
+    color: #ffe; /* Цвет ссылки */
+    -webkit-filter: grayscale(0%);
+}

@@ -12,19 +12,16 @@ namespace InCity
     using System;
     using System.Collections.Generic;
     
-    public partial class Event
+    public partial class Tag
     {
-        public Event()
+        public Tag()
         {
-            this.EventPlace = new HashSet<EventPlace>();
-            this.Tag = new HashSet<Tag>();
+            this.Event = new HashSet<Event>();
         }
     
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
     
-        public virtual ICollection<EventPlace> EventPlace { get; set; }
-        public virtual ICollection<Tag> Tag { get; set; }
+        public virtual ICollection<Event> Event { get; set; }
     }
 }

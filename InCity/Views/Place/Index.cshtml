@@ -4,16 +4,18 @@
     ViewBag.Title = "Места";
 }
 
-<h2>Места:</h2>
+<h2>Места</h2>
 
-<table class="table">
+<div class="list-group">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            <h4>@Html.ActionLink(item.mTitle, "Show", "Place", new { pId = item.mId }, new { })</h4>
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <a href="Place/Show?pId=@item.mId" class="list-group-item place-btn" style=" padding: 0px;" >
+            <div style="text-align: center; height: 150px; background: url(../../@item.mHeader) no-repeat center center;">
+                <div style="color: whitesmoke; font-size: 60px; padding-top:35px">@Html.DisplayFor(m => item.mTitle)</div>
+            </div>
+        </a>
+                @*<h4>@Html.ActionLink(item.mTitle, "Show", "Place", new { pId = item.mId }, new { })</h4>*@
+    }
 
-</table>
+</div>

@@ -12,14 +12,34 @@ namespace InCity.Controllers
         // GET: Event
         public ActionResult Index()
         {
-            InCityDBEntities dbEntity = new InCityDBEntities();
-            List<EventModels> events= new List<EventModels>();
+            EventsListViewModel model = new EventsListViewModel();
+            return View(model);
+        }
 
-            foreach (var e in dbEntity.Event)
-                events.Add(new EventModels(e));
+        public ActionResult AddTag(String pModel, String pTag)
+        {
+            EventsListViewModel model = new System.Web.Script.Serialization.JavaScriptSerializer().
+                Deserialize<EventsListViewModel>(pModel);
 
-            events.Sort((x, y) => DateTime.Compare(x.mDate, y.mDate));
-            return View(events);
+            TagModel tag = new System.Web.Script.Serialization.JavaScriptSerializer().
+                Deserialize<TagModel>(pTag);
+
+            model.mChoosedTagsList.Add(tag);
+            model = new EventsListViewModel(model.mChoosedTagsList);
+            return View("Index", model);
+        }
+
+        public ActionResult RemoveTag(String pModel, String pTag)
+        {
+            EventsListViewModel model = new System.Web.Script.Serialization.JavaScriptSerializer().
+                Deserialize<EventsListViewModel>(pModel);
+
+            TagModel tag = new System.Web.Script.Serialization.JavaScriptSerializer().
+                Deserialize<TagModel>(pTag);
+
+            model.mChoosedTagsList.Remove(model.mChoosedTagsList.First(t=>t.mId==tag.mId));
+            model = new EventsListViewModel(model.mChoosedTagsList);
+            return View("Index", model);
         }
     }
 }

@@ -7,10 +7,14 @@
       <Diagram DiagramId="9b56ff1313ad4bce99bc4f20e17c0880" Name="Diagram1">
         <EntityTypeShape EntityType="InCityDBModel.City" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="InCityDBModel.Event" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InCityDBModel.Place" Width="1.5" PointX="5.5" PointY="1" />
-        <AssociationConnector Association="InCityDBModel.FK__Event__PlaceId__38996AB5" />
-        <EntityTypeShape EntityType="InCityDBModel.Pictures" Width="1.5" PointX="4" PointY="3.875" />
+        <EntityTypeShape EntityType="InCityDBModel.Place" Width="1.5" PointX="5.375" PointY="1" />
+        <EntityTypeShape EntityType="InCityDBModel.Pictures" Width="1.5" PointX="8.375" PointY="2.625" />
         <AssociationConnector Association="InCityDBModel.FK__Place__HeaderId__4BAC3F29" />
+        <EntityTypeShape EntityType="InCityDBModel.Tag" Width="1.5" PointX="1.125" PointY="4.5" />
+        <EntityTypeShape EntityType="InCityDBModel.EventPlace" Width="1.5" PointX="4.875" PointY="4.25" />
+        <AssociationConnector Association="InCityDBModel.FK__EventPlac__Event__5BE2A6F2" />
+        <AssociationConnector Association="InCityDBModel.FK__EventPlac__Place__5CD6CB2B" />
+        <AssociationConnector Association="InCityDBModel.EventTag" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

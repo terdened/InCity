@@ -14,9 +14,30 @@
     <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="Title" Type="nchar" MaxLength="50" Nullable="false" />
     <Property Name="Description" Type="nchar" MaxLength="1000" />
-    <Property Name="Date" Type="date" />
-    <Property Name="Place" Type="nchar" MaxLength="200" />
-    <Property Name="PlaceId" Type="int" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "C:\USERS\ADMIN\DOCUMENTS\VISUAL STUDIO 2013\PROJECTS\INCITY\INCITY\APP_DATA\INCITYDB.MDF.dbo.EventPlace" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="EventPlace">
+    <Key>
+      <PropertyRef Name="EventId" />
+      <PropertyRef Name="PlaceId" />
+      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="EndDate" />
+    </Key>
+    <Property Name="EventId" Type="int" Nullable="false" />
+    <Property Name="PlaceId" Type="int" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "C:\USERS\ADMIN\DOCUMENTS\VISUAL STUDIO 2013\PROJECTS\INCITY\INCITY\APP_DATA\INCITYDB.MDF.dbo.EventTag" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="EventTag">
+    <Key>
+      <PropertyRef Name="EventId" />
+      <PropertyRef Name="TagId" />
+    </Key>
+    <Property Name="EventId" Type="int" Nullable="false" />
+    <Property Name="TagId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Pictures">
     <Key>
@@ -34,15 +55,58 @@
     <Property Name="Address" Type="nchar" MaxLength="200" Nullable="false" />
     <Property Name="HeaderId" Type="int" />
   </EntityType>
-  <Association Name="FK__Event__PlaceId__38996AB5">
-    <End Role="Place" Type="Self.Place" Multiplicity="0..1" />
-    <End Role="Event" Type="Self.Event" Multiplicity="*" />
+  <EntityType Name="Tag">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Title" Type="nchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__EventPlac__Event__5BE2A6F2">
+    <End Role="Event" Type="Self.Event" Multiplicity="1" />
+    <End Role="EventPlace" Type="Self.EventPlace" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventPlace">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EventPlac__Place__5CD6CB2B">
+    <End Role="Place" Type="Self.Place" Multiplicity="1" />
+    <End Role="EventPlace" Type="Self.EventPlace" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Place">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Event">
+      <Dependent Role="EventPlace">
         <PropertyRef Name="PlaceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EventTag__EventI__6383C8BA">
+    <End Role="Event" Type="Self.Event" Multiplicity="1" />
+    <End Role="EventTag" Type="Self.EventTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventTag">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EventTag__TagId__6477ECF3">
+    <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+    <End Role="EventTag" Type="Self.EventTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tag">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventTag">
+        <PropertyRef Name="TagId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -63,9 +127,36 @@
     <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__Event__PlaceId__38996AB5" Association="Self.FK__Event__PlaceId__38996AB5">
-      <End Role="Place" EntitySet="Place" />
+    <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventPlace" EntityType="Self.EventPlace" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [EventPlace].[EventId] AS [EventId], 
+    [EventPlace].[PlaceId] AS [PlaceId], 
+    [EventPlace].[StartDate] AS [StartDate], 
+    [EventPlace].[EndDate] AS [EndDate]
+    FROM [dbo].[EventPlace] AS [EventPlace]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="EventTag" EntityType="Self.EventTag" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [EventTag].[EventId] AS [EventId], 
+    [EventTag].[TagId] AS [TagId]
+    FROM [dbo].[EventTag] AS [EventTag]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__EventPlac__Event__5BE2A6F2" Association="Self.FK__EventPlac__Event__5BE2A6F2">
       <End Role="Event" EntitySet="Event" />
+      <End Role="EventPlace" EntitySet="EventPlace" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EventPlac__Place__5CD6CB2B" Association="Self.FK__EventPlac__Place__5CD6CB2B">
+      <End Role="Place" EntitySet="Place" />
+      <End Role="EventPlace" EntitySet="EventPlace" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EventTag__EventI__6383C8BA" Association="Self.FK__EventTag__EventI__6383C8BA">
+      <End Role="Event" EntitySet="Event" />
+      <End Role="EventTag" EntitySet="EventTag" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EventTag__TagId__6477ECF3" Association="Self.FK__EventTag__TagId__6477ECF3">
+      <End Role="Tag" EntitySet="Tag" />
+      <End Role="EventTag" EntitySet="EventTag" />
     </AssociationSet>
     <AssociationSet Name="FK__Place__HeaderId__4BAC3F29" Association="Self.FK__Place__HeaderId__4BAC3F29">
       <End Role="Pictures" EntitySet="Pictures" />

@@ -14,23 +14,31 @@
     <Property Name="Id" Type="Int32" Nullable="false" />
     <Property Name="Title" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="Description" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
-    <Property Name="Date" Type="DateTime" Precision="0" />
-    <Property Name="Place" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
-    <Property Name="PlaceId" Type="Int32" />
-    <NavigationProperty Name="Place1" Relationship="InCityDBModel.FK__Event__PlaceId__38996AB5" FromRole="Event" ToRole="Place" />
+    <NavigationProperty Name="EventPlace" Relationship="InCityDBModel.FK__EventPlac__Event__5BE2A6F2" FromRole="Event" ToRole="EventPlace" />
+    <NavigationProperty Name="Tag" Relationship="InCityDBModel.EventTag" FromRole="Event" ToRole="Tag" />
   </EntityType>
   <EntityContainer Name="InCityDBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="City" EntityType="Self.City" />
     <EntitySet Name="Event" EntityType="Self.Event" />
     <EntitySet Name="Place" EntityType="InCityDBModel.Place" />
-    <AssociationSet Name="FK__Event__PlaceId__38996AB5" Association="InCityDBModel.FK__Event__PlaceId__38996AB5">
-      <End Role="Place" EntitySet="Place" />
-      <End Role="Event" EntitySet="Event" />
-    </AssociationSet>
     <EntitySet Name="Pictures" EntityType="InCityDBModel.Pictures" />
     <AssociationSet Name="FK__Place__HeaderId__4BAC3F29" Association="InCityDBModel.FK__Place__HeaderId__4BAC3F29">
       <End Role="Pictures" EntitySet="Pictures" />
       <End Role="Place" EntitySet="Place" />
+    </AssociationSet>
+    <EntitySet Name="Tag" EntityType="InCityDBModel.Tag" />
+    <EntitySet Name="EventPlace" EntityType="InCityDBModel.EventPlace" />
+    <AssociationSet Name="FK__EventPlac__Event__5BE2A6F2" Association="InCityDBModel.FK__EventPlac__Event__5BE2A6F2">
+      <End Role="Event" EntitySet="Event" />
+      <End Role="EventPlace" EntitySet="EventPlace" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EventPlac__Place__5CD6CB2B" Association="InCityDBModel.FK__EventPlac__Place__5CD6CB2B">
+      <End Role="Place" EntitySet="Place" />
+      <End Role="EventPlace" EntitySet="EventPlace" />
+    </AssociationSet>
+    <AssociationSet Name="EventTag" Association="InCityDBModel.EventTag">
+      <End Role="Event" EntitySet="Event" />
+      <End Role="Tag" EntitySet="Tag" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Place">
@@ -40,22 +48,10 @@
     <Property Name="Id" Type="Int32" Nullable="false" />
     <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
     <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="true" Unicode="true" />
-    <NavigationProperty Name="Event" Relationship="InCityDBModel.FK__Event__PlaceId__38996AB5" FromRole="Place" ToRole="Event" />
     <Property Name="HeaderId" Type="Int32" />
     <NavigationProperty Name="Pictures" Relationship="InCityDBModel.FK__Place__HeaderId__4BAC3F29" FromRole="Place" ToRole="Pictures" />
+    <NavigationProperty Name="EventPlace" Relationship="InCityDBModel.FK__EventPlac__Place__5CD6CB2B" FromRole="Place" ToRole="EventPlace" />
   </EntityType>
-  <Association Name="FK__Event__PlaceId__38996AB5">
-    <End Type="InCityDBModel.Place" Role="Place" Multiplicity="0..1" />
-    <End Type="InCityDBModel.Event" Role="Event" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Place">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Event">
-        <PropertyRef Name="PlaceId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="Pictures">
     <Key>
       <PropertyRef Name="Id" />
@@ -75,5 +71,55 @@
         <PropertyRef Name="HeaderId" />
       </Dependent>
     </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Tag">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Event" Relationship="InCityDBModel.EventTag" FromRole="Tag" ToRole="Event" />
+  </EntityType>
+  <EntityType Name="EventPlace">
+    <Key>
+      <PropertyRef Name="EventId" />
+      <PropertyRef Name="PlaceId" />
+      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="EndDate" />
+    </Key>
+    <Property Name="EventId" Type="Int32" Nullable="false" />
+    <Property Name="PlaceId" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Event" Relationship="InCityDBModel.FK__EventPlac__Event__5BE2A6F2" FromRole="EventPlace" ToRole="Event" />
+    <NavigationProperty Name="Place" Relationship="InCityDBModel.FK__EventPlac__Place__5CD6CB2B" FromRole="EventPlace" ToRole="Place" />
+  </EntityType>
+  <Association Name="FK__EventPlac__Event__5BE2A6F2">
+    <End Type="InCityDBModel.Event" Role="Event" Multiplicity="1" />
+    <End Type="InCityDBModel.EventPlace" Role="EventPlace" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventPlace">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EventPlac__Place__5CD6CB2B">
+    <End Type="InCityDBModel.Place" Role="Place" Multiplicity="1" />
+    <End Type="InCityDBModel.EventPlace" Role="EventPlace" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Place">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventPlace">
+        <PropertyRef Name="PlaceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EventTag">
+    <End Type="InCityDBModel.Event" Role="Event" Multiplicity="*" />
+    <End Type="InCityDBModel.Tag" Role="Tag" Multiplicity="*" />
   </Association>
 </Schema>

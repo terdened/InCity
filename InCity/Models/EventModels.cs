@@ -10,20 +10,33 @@ namespace InCity.Models
         public int mId;
         public string mTitle;
         public string mDescription;
-        public DateTime mDate;
-        public PlaceModel mPlace;
+        public DateTime mStartDate;
+        public DateTime mEndDate;
+        public List<PlaceModel> mPlace;
 
         public EventModels(Event pDBEvent)
         {
             this.mId = pDBEvent.Id;
             this.mTitle = pDBEvent.Title;
             this.mDescription = pDBEvent.Description;
-            this.mDate = (DateTime)pDBEvent.Date;
 
-            if (pDBEvent.Place1!=null)
-                this.mPlace = new PlaceModel(pDBEvent.Place1);
-            else
-                this.mPlace = new PlaceModel(pDBEvent.Place);
+            this.mStartDate = pDBEvent.EventPlace.Min(ep => ep.StartDate);
+            this.mEndDate = pDBEvent.EventPlace.Max(ep => ep.EndDate);
+
+            this.mPlace = new List<PlaceModel>();
+
+            foreach(var ep in pDBEvent.EventPlace)
+                this.mPlace.Add(new PlaceModel(ep.Place));
+        }
+
+        public EventModels()
+        {
+
+        }
+
+        private string getValue(string pIn)
+        {
+            return pIn.Split(' ')[0];
         }
     }
 }

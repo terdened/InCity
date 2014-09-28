@@ -6,14 +6,14 @@
 
 @if (Model.mHeader != "")
 {
-    <div style="text-align: center; height: 150px; background: url(../../@Model.mHeader) no-repeat center center; background-size: cover;">
-        <div style="color: whitesmoke; font-size: 60px; padding-top:35px">Места</div>
+    <div style="text-align: center; height: 150px; background: url(../../@Model.mHeader) no-repeat center center;">
+        <div style="color: whitesmoke; font-size: 60px; padding-top:35px">@Html.DisplayFor(m => Model.mTitle)</div>
     </div>
 }
 else
 {
-    <div style="text-align: center; height: 150px; background: url(../../Content/Img/Headers/1.jpg) no-repeat center center; background-size: cover;">
-        <div style="color: whitesmoke; font-size: 60px; padding-top:35px">Места</div>
+    <div style="text-align: center; height: 150px; background: url(../../Content/Img/Headers/1.jpg) no-repeat center center;">
+        <div style="color: whitesmoke; font-size: 60px; padding-top:35px">@Html.DisplayFor(m => Model.mTitle)</div>
     </div>
 }
 
@@ -23,6 +23,5 @@ else
     </dl>
 </div>
 <p>
-    <h4>@Html.DisplayFor(m => Model.mTitle)</h4>
-    @Html.DisplayFor(m => Model.mAddress)
+    <b>Адрес:</b> @Html.DisplayFor(m => Model.mAddress)
 </p>

@@ -28,5 +28,10 @@ namespace InCity.Models
         {
             mAddress = pAddress;
         }
+
+        public PlaceModel()
+        {
+
+        }
     }
 }
