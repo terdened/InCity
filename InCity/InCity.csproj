@@ -194,6 +194,9 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PlaceModel.cs" />
+    <Compile Include="Pictures.cs">
+      <DependentUpon>InCityDBEDM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Place.cs">
       <DependentUpon>InCityDBEDM.tt</DependentUpon>
     </Compile>
@@ -282,6 +285,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Place\Show.cshtml" />
+    <Content Include="Views\Place\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

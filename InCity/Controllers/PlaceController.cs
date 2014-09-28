@@ -12,7 +12,13 @@ namespace InCity.Controllers
         // GET: Place
         public ActionResult Index()
         {
-            return View();
+            InCityDBEntities dbEntity = new InCityDBEntities();
+            List<PlaceModel> places = new List<PlaceModel>();
+
+            foreach (var p in dbEntity.Place)
+                places.Add(new PlaceModel(p));
+
+            return View(places);
         }
 
         public ActionResult Show(int pId)

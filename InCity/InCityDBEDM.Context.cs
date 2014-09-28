@@ -28,5 +28,6 @@ namespace InCity
         public virtual DbSet<City> City { get; set; }
         public virtual DbSet<Event> Event { get; set; }
         public virtual DbSet<Place> Place { get; set; }
+        public virtual DbSet<Pictures> Pictures { get; set; }
     }
 }

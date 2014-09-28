@@ -23,6 +23,13 @@
           <Property Name="Place" Type="nchar" MaxLength="200" />
           <Property Name="PlaceId" Type="int" />
         </EntityType>
+        <EntityType Name="Pictures">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Path" Type="nchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="Place">
           <Key>
             <PropertyRef Name="Id" />
@@ -30,6 +37,7 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Title" Type="nchar" MaxLength="100" Nullable="false" />
           <Property Name="Address" Type="nchar" MaxLength="200" Nullable="false" />
+          <Property Name="HeaderId" Type="int" />
         </EntityType>
         <Association Name="FK__Event__PlaceId__38996AB5">
           <End Role="Place" Type="Self.Place" Multiplicity="0..1" />
@@ -43,13 +51,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Place__HeaderId__4BAC3F29">
+          <End Role="Pictures" Type="Self.Pictures" Multiplicity="0..1" />
+          <End Role="Place" Type="Self.Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pictures">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="HeaderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище InCityDBModelContainer">
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Event__PlaceId__38996AB5" Association="Self.FK__Event__PlaceId__38996AB5">
             <End Role="Place" EntitySet="Place" />
             <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Place__HeaderId__4BAC3F29" Association="Self.FK__Place__HeaderId__4BAC3F29">
+            <End Role="Pictures" EntitySet="Pictures" />
+            <End Role="Place" EntitySet="Place" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -83,6 +108,11 @@
             <End Role="Place" EntitySet="Place" />
             <End Role="Event" EntitySet="Event" />
           </AssociationSet>
+          <EntitySet Name="Pictures" EntityType="InCityDBModel.Pictures" />
+          <AssociationSet Name="FK__Place__HeaderId__4BAC3F29" Association="InCityDBModel.FK__Place__HeaderId__4BAC3F29">
+            <End Role="Pictures" EntitySet="Pictures" />
+            <End Role="Place" EntitySet="Place" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Place">
           <Key>
@@ -92,6 +122,8 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Event" Relationship="InCityDBModel.FK__Event__PlaceId__38996AB5" FromRole="Place" ToRole="Event" />
+          <Property Name="HeaderId" Type="Int32" />
+          <NavigationProperty Name="Pictures" Relationship="InCityDBModel.FK__Place__HeaderId__4BAC3F29" FromRole="Place" ToRole="Pictures" />
         </EntityType>
         <Association Name="FK__Event__PlaceId__38996AB5">
           <End Type="InCityDBModel.Place" Role="Place" Multiplicity="0..1" />
@@ -102,6 +134,26 @@
             </Principal>
             <Dependent Role="Event">
               <PropertyRef Name="PlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Pictures">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Path" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Place" Relationship="InCityDBModel.FK__Place__HeaderId__4BAC3F29" FromRole="Pictures" ToRole="Place" />
+        </EntityType>
+        <Association Name="FK__Place__HeaderId__4BAC3F29">
+          <End Type="InCityDBModel.Pictures" Role="Pictures" Multiplicity="0..1" />
+          <End Type="InCityDBModel.Place" Role="Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pictures">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="HeaderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -134,8 +186,17 @@
           <EntitySetMapping Name="Place">
             <EntityTypeMapping TypeName="InCityDBModel.Place">
               <MappingFragment StoreEntitySet="Place">
+                <ScalarProperty Name="HeaderId" ColumnName="HeaderId" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pictures">
+            <EntityTypeMapping TypeName="InCityDBModel.Pictures">
+              <MappingFragment StoreEntitySet="Pictures">
+                <ScalarProperty Name="Path" ColumnName="Path" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

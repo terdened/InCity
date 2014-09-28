@@ -27,6 +27,11 @@
       <End Role="Place" EntitySet="Place" />
       <End Role="Event" EntitySet="Event" />
     </AssociationSet>
+    <EntitySet Name="Pictures" EntityType="InCityDBModel.Pictures" />
+    <AssociationSet Name="FK__Place__HeaderId__4BAC3F29" Association="InCityDBModel.FK__Place__HeaderId__4BAC3F29">
+      <End Role="Pictures" EntitySet="Pictures" />
+      <End Role="Place" EntitySet="Place" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Place">
     <Key>
@@ -36,6 +41,8 @@
     <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
     <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="true" Unicode="true" />
     <NavigationProperty Name="Event" Relationship="InCityDBModel.FK__Event__PlaceId__38996AB5" FromRole="Place" ToRole="Event" />
+    <Property Name="HeaderId" Type="Int32" />
+    <NavigationProperty Name="Pictures" Relationship="InCityDBModel.FK__Place__HeaderId__4BAC3F29" FromRole="Place" ToRole="Pictures" />
   </EntityType>
   <Association Name="FK__Event__PlaceId__38996AB5">
     <End Type="InCityDBModel.Place" Role="Place" Multiplicity="0..1" />
@@ -46,6 +53,26 @@
       </Principal>
       <Dependent Role="Event">
         <PropertyRef Name="PlaceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Pictures">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Path" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Place" Relationship="InCityDBModel.FK__Place__HeaderId__4BAC3F29" FromRole="Pictures" ToRole="Place" />
+  </EntityType>
+  <Association Name="FK__Place__HeaderId__4BAC3F29">
+    <End Type="InCityDBModel.Pictures" Role="Pictures" Multiplicity="0..1" />
+    <End Type="InCityDBModel.Place" Role="Place" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pictures">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Place">
+        <PropertyRef Name="HeaderId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

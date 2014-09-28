@@ -12,19 +12,16 @@ namespace InCity
     using System;
     using System.Collections.Generic;
     
-    public partial class Place
+    public partial class Pictures
     {
-        public Place()
+        public Pictures()
         {
-            this.Event = new HashSet<Event>();
+            this.Place = new HashSet<Place>();
         }
     
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Address { get; set; }
-        public Nullable<int> HeaderId { get; set; }
+        public string Path { get; set; }
     
-        public virtual ICollection<Event> Event { get; set; }
-        public virtual Pictures Pictures { get; set; }
+        public virtual ICollection<Place> Place { get; set; }
     }
 }

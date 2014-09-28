@@ -24,8 +24,17 @@
     <EntitySetMapping Name="Place">
       <EntityTypeMapping TypeName="InCityDBModel.Place">
         <MappingFragment StoreEntitySet="Place">
+          <ScalarProperty Name="HeaderId" ColumnName="HeaderId" />
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pictures">
+      <EntityTypeMapping TypeName="InCityDBModel.Pictures">
+        <MappingFragment StoreEntitySet="Pictures">
+          <ScalarProperty Name="Path" ColumnName="Path" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -1,10 +1,21 @@
 ﻿@model InCity.Models.PlaceModel
 
-@{
-    ViewBag.Title = "Show";
+@{ 
+    ViewBag.Title = "Места";
 }
 
-<h2>Места:</h2>
+@if (Model.mHeader != "")
+{
+    <div style="text-align: center; height: 150px; background: url(../../@Model.mHeader) no-repeat center center; background-size: cover;">
+        <div style="color: whitesmoke; font-size: 60px; padding-top:35px">Места</div>
+    </div>
+}
+else
+{
+    <div style="text-align: center; height: 150px; background: url(../../Content/Img/Headers/1.jpg) no-repeat center center; background-size: cover;">
+        <div style="color: whitesmoke; font-size: 60px; padding-top:35px">Места</div>
+    </div>
+}
 
 <div>
     <hr />

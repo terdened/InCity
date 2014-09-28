@@ -1,0 +1,19 @@
+﻿@model IEnumerable<InCity.Models.PlaceModel>
+
+@{
+    ViewBag.Title = "Места";
+}
+
+<h2>Места:</h2>
+
+<table class="table">
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <h4>@Html.ActionLink(item.mTitle, "Show", "Place", new { pId = item.mId }, new { })</h4>
+        </td>
+    </tr>
+}
+
+</table>

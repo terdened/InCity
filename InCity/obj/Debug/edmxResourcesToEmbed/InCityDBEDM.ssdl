@@ -18,6 +18,13 @@
     <Property Name="Place" Type="nchar" MaxLength="200" />
     <Property Name="PlaceId" Type="int" />
   </EntityType>
+  <EntityType Name="Pictures">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Path" Type="nchar" MaxLength="100" Nullable="false" />
+  </EntityType>
   <EntityType Name="Place">
     <Key>
       <PropertyRef Name="Id" />
@@ -25,6 +32,7 @@
     <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="Title" Type="nchar" MaxLength="100" Nullable="false" />
     <Property Name="Address" Type="nchar" MaxLength="200" Nullable="false" />
+    <Property Name="HeaderId" Type="int" />
   </EntityType>
   <Association Name="FK__Event__PlaceId__38996AB5">
     <End Role="Place" Type="Self.Place" Multiplicity="0..1" />
@@ -38,13 +46,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__Place__HeaderId__4BAC3F29">
+    <End Role="Pictures" Type="Self.Pictures" Multiplicity="0..1" />
+    <End Role="Place" Type="Self.Place" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pictures">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Place">
+        <PropertyRef Name="HeaderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="Хранилище InCityDBModelContainer">
     <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__Event__PlaceId__38996AB5" Association="Self.FK__Event__PlaceId__38996AB5">
       <End Role="Place" EntitySet="Place" />
       <End Role="Event" EntitySet="Event" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Place__HeaderId__4BAC3F29" Association="Self.FK__Place__HeaderId__4BAC3F29">
+      <End Role="Pictures" EntitySet="Pictures" />
+      <End Role="Place" EntitySet="Place" />
     </AssociationSet>
   </EntityContainer>
 </Schema>
