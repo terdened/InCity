@@ -50,8 +50,37 @@ namespace InCity.Controllers
             EventsListViewModel model = new System.Web.Script.Serialization.JavaScriptSerializer().
                 Deserialize<EventsListViewModel>(pModel);
 
-            DateTime date = DateTime.Parse(pDate);
-            model = new EventsListViewModel(date);
+            
+
+            if (pDate=="today")
+            {
+                model = new EventsListViewModel(DateTime.Today);
+            }
+            else
+            if (pDate == "tomorrow")
+            {
+                model = new EventsListViewModel(DateTime.Today.AddDays(1));
+            }
+            else
+            if (pDate == "week")
+            {
+                int start = (int)DateTime.Today.DayOfWeek;
+                int target = (int)7;
+                if (target <= start)
+                    target += 7;
+                model = new EventsListViewModel(DateTime.Today, DateTime.Today.AddDays(target - start));
+            }
+            else
+            if (pDate == "all")
+            {
+                model = new EventsListViewModel();
+            }
+            else
+            {
+                DateTime date = DateTime.Parse(pDate);
+                model = new EventsListViewModel(date);
+            }
+
             return PartialView("Index", model);
         }
     }

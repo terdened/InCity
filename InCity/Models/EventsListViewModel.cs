@@ -11,13 +11,15 @@ namespace InCity.Models
         public List<TagModel> mChoosedTagsList;
         public List<EventModels> mEventsList;
         public string mChoosedData;
+        public string mTitleDate;
 
         public EventsListViewModel()
         {
             InCityDBEntities db = new InCityDBEntities();
 
             this.mChoosedData = DateTime.Today.ToString();
-
+            this.mTitleDate = "all";
+ 
             this.mTagsList = new List<TagModel>();
             foreach(var tag in db.Tag)
                 mTagsList.Add(new TagModel(tag));
@@ -34,6 +36,14 @@ namespace InCity.Models
             InCityDBEntities db = new InCityDBEntities();
 
             this.mChoosedData = pDate.ToString();
+            
+            if(pDate == DateTime.Today)
+                this.mTitleDate = "today";
+            else
+            if (pDate == DateTime.Today.AddDays(1))
+                this.mTitleDate = "tomorrow";
+            else
+                this.mTitleDate = "other";
 
             this.mTagsList = new List<TagModel>();
             foreach (var tag in db.Tag)
@@ -48,6 +58,29 @@ namespace InCity.Models
                 mEventsList.Add(new EventModels(e.Event));
         }
 
+        public EventsListViewModel(DateTime pStartDate, DateTime pEndDate)
+        {
+            InCityDBEntities db = new InCityDBEntities();
+
+            this.mChoosedData = DateTime.Today.ToString();
+            this.mTitleDate = "week";
+
+            this.mTagsList = new List<TagModel>();
+            foreach (var tag in db.Tag)
+                mTagsList.Add(new TagModel(tag));
+
+            this.mChoosedTagsList = new List<TagModel>();
+
+            this.mEventsList = new List<EventModels>();
+
+            List<EventPlace> ep = db.EventPlace.Where(ev => (ev.StartDate <= pStartDate && ev.EndDate >= pStartDate)||
+                                                            (ev.StartDate <= pEndDate && ev.EndDate >= pEndDate) ||
+                                                            (ev.StartDate >= pStartDate && ev.StartDate <= pEndDate) ||
+                                                            (ev.EndDate <= pStartDate && ev.EndDate >= pEndDate)).ToList();
+            foreach (var e in ep)
+                mEventsList.Add(new EventModels(e.Event));
+        }
+
         public EventsListViewModel(List<TagModel> pChoosedTagsList)
         {
             if (pChoosedTagsList.Count > 0)
@@ -55,6 +88,7 @@ namespace InCity.Models
                 InCityDBEntities db = new InCityDBEntities();
 
                 this.mChoosedData = DateTime.Today.ToString();
+                this.mTitleDate = "all";
 
                 this.mTagsList = new List<TagModel>();
                 foreach (var tag in db.Tag)
@@ -86,6 +120,7 @@ namespace InCity.Models
                 InCityDBEntities db = new InCityDBEntities();
 
                 this.mChoosedData = DateTime.Today.ToString();
+                this.mTitleDate = "all";
 
                 this.mTagsList = new List<TagModel>();
                 foreach (var tag in db.Tag)

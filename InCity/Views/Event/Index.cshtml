@@ -11,8 +11,53 @@
     string modelJSON = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model);
     @:<input type="hidden" id="modelJSON" name="modelJSON" value="@modelJSON"  maxlength="10000"/>
 }
-<div class="jumbotron" style="font-size: 15px; font-family: 'Helvetica';">
-<h2 style="margin-top: -20px">События</h2>
+<div class="jumbotron" style="margin-top: -20px;font-size: 15px; font-family: 'Helvetica';">
+
+<div class="row">
+    <h2 class="col-md-3" style="text-align: center; margin-top: 0px; display: inline-block">События</h2>
+    @{
+        if (Model.mTitleDate == "today")
+        { 
+            @:<a href="#" class="col-md-2 btn btn-primary" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('today')">Сегодня</a>
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('tomorrow')">Завтра</a>
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('week')">На неделе</a>
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('all')">Все ближайшие</a>
+        }
+        else
+        if (Model.mTitleDate == "tomorrow")
+        {
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('today')">Сегодня</a>
+            @:<a href="#" class="col-md-2 btn btn-primary" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('tomorrow')">Завтра</a>
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('week')">На неделе</a>
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('all')">Все ближайшие</a>
+        }
+        else
+        if (Model.mTitleDate == "week")
+        {
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('today')">Сегодня</a>
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('tomorrow')">Завтра</a>
+            @:<a href="#" class="col-md-2 btn btn-primary" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('week')">На неделе</a>
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('all')">Все ближайшие</a>
+        }
+        else
+        if (Model.mTitleDate == "all")
+        {
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('today')">Сегодня</a>
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('tomorrow')">Завтра</a>
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('week')">На неделе</a>
+            @:<a href="#" class="col-md-2 btn btn-primary" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('all')">Все ближайшие</a>
+        }
+        else
+        {
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('today')">Сегодня</a>
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('tomorrow')">Завтра</a>
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('week')">На неделе</a>
+            @:<a href="#" class="col-md-2 btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 20px" onclick="chooseDate('all')">Все ближайшие</a>
+        }
+           
+}
+</div>
+
 <table>
     <tr>
         <td>
@@ -20,7 +65,7 @@
         </td>
         <td style="width: 100%;">
             <div class="row" style="margin: 10px; font-size: 30px">
-                @foreach(var tag in Model.mTagsList)
+                @foreach (var tag in Model.mTagsList)
                 {
                         
                         int length = 2;
@@ -126,6 +171,7 @@
         @foreach (var place in item.mPlace)
         { 
             @Html.ActionLink(place.mTitle, "Show", "Place", new { pId = place.mId }, new { })
+            @:<br />
         }
     </td>
 </tr>
