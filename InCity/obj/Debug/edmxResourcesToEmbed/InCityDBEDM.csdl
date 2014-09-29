@@ -12,8 +12,8 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="Title" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="EventPlace" Relationship="InCityDBModel.FK__EventPlac__Event__5BE2A6F2" FromRole="Event" ToRole="EventPlace" />
     <NavigationProperty Name="Tag" Relationship="InCityDBModel.EventTag" FromRole="Event" ToRole="Tag" />
   </EntityType>
@@ -46,8 +46,8 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
-    <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="true" Unicode="true" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="HeaderId" Type="Int32" />
     <NavigationProperty Name="Pictures" Relationship="InCityDBModel.FK__Place__HeaderId__4BAC3F29" FromRole="Place" ToRole="Pictures" />
     <NavigationProperty Name="EventPlace" Relationship="InCityDBModel.FK__EventPlac__Place__5CD6CB2B" FromRole="Place" ToRole="EventPlace" />
@@ -57,7 +57,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="Path" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="Path" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Place" Relationship="InCityDBModel.FK__Place__HeaderId__4BAC3F29" FromRole="Pictures" ToRole="Place" />
   </EntityType>
   <Association Name="FK__Place__HeaderId__4BAC3F29">
@@ -77,7 +77,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" />
-    <Property Name="Title" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Event" Relationship="InCityDBModel.EventTag" FromRole="Tag" ToRole="Event" />
   </EntityType>
   <EntityType Name="EventPlace">

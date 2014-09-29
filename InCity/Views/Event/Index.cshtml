@@ -2,92 +2,134 @@
 @{
     ViewBag.Title = "События";
 }
+<div id="event-content">
+<script src="../../Scripts/jquery-1.10.2.js"></script>
+<script src="../../Scripts/jquery.pickmeup.js"></script>
+<link href="../../Content/pickmeup.css" rel="stylesheet" type="text/css" />
 
+@{
+    string modelJSON = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model);
+    @:<input type="hidden" id="modelJSON" name="modelJSON" value="@modelJSON"  maxlength="10000"/>
+}
 <div class="jumbotron" style="font-size: 15px; font-family: 'Helvetica';">
-    <h2 style="margin-top: -20px">События</h2>
-    <table>
-        <tr>
-            <td>
-                <div class="single"></div>
-            </td>
-            <td style="width: 100%;">
-                <div class="row" style="margin: 10px; font-size: 30px">
-                    @foreach(var tag in Model.mTagsList)
-                    {
+<h2 style="margin-top: -20px">События</h2>
+<table>
+    <tr>
+        <td>
+            <div class="single"></div>
+        </td>
+        <td style="width: 100%;">
+            <div class="row" style="margin: 10px; font-size: 30px">
+                @foreach(var tag in Model.mTagsList)
+                {
                         
-                            int length = 200;
-                            string title = tag.mTitle.Split(' ')[0];
+                        int length = 2;
+                        string title = tag.mTitle.Split(' ')[0];
                         
-                            if (title.Length < 5)
-                            {
-                                length = 200;
-                            }
-                            else
-                            if (title.Length < 7)
-                            {
-                                length = 225;
-                            }
-                            else
-                            if (title.Length < 8)
-                            {
-                                length = 250;
-                            }
-                            else
-                            if (title.Length < 9)
-                            {
-                                length = 275;
-                            }
-                            else
-                            {
-                                length = 300;
-                            }
+                        if (title.Length < 5)
+                        {
+                            length = 2;
+                        }
+                        else
+                        if (title.Length < 7)
+                        {
+                            length = 3;
+                        }
+                        else
+                        if (title.Length < 8)
+                        {
+                            length = 4;
+                        }
+                        else
+                        {
+                            length = 5;
+                        }
 
-                            string modelJSON = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model);
-                            string tagJSON = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(tag);
+                        string tagJSON = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(tag);
 
-                            if (Model.mChoosedTagsList.Where(t => t.mId == tag.mId).Count()>0)
-                            {        
-                                @Html.ActionLink(@tag.mTitle, "RemoveTag", "Event", new { pModel = modelJSON, pTag = tagJSON }, new { @class = "col-md-6 btn btn-primary",
-                                style = "margin-right: 10px; margin-bottom: 10px; width:" + @length + "px; font-size: 25px"})
-                            }
-                            else
-                            {
-                                @Html.ActionLink(@tag.mTitle, "AddTag", "Event", new { pModel = modelJSON, pTag = tagJSON }, new { HttpMethod = "POST",@class = "col-md-6 btn btn-default",
-                                style = "margin-right: 10px; margin-bottom: 10px; width:" + @length + "px; font-size: 25px"})
-                            }
-                    }
-                </div>
-            </td>
-        </tr>
-    </table>
+                        if (Model.mChoosedTagsList.Where(t => t.mId == tag.mId).Count()>0)
+                        {        
+                            @*@Ajax.ActionLink(@tag.mTitle, "RemoveTag", "Event", new { pModel = modelJSON, pTag = tagJSON }, new AjaxOptions { HttpMethod = "POST" })
+                            @Html.ActionLink(@tag.mTitle, "RemoveTag", "Event", new { pModel = modelJSON, pTag = tagJSON }, new { @class = "col-md-6 btn btn-primary",
+                            style = "margin-right: 10px; margin-bottom: 10px; width:" + @length + "px; font-size: 25px"})*@
+                            @:<a href="#" class="col-md-@length btn btn-primary" style="margin-right: 10px; margin-bottom: 10px; font-size: 25px" onclick="removeTag('@tagJSON')">@tag.mTitle</a>
+                        }
+                        else
+                        {
+                            @*@Ajax.ActionLink(@tag.mTitle, "AddTag", "Event", new { pModel = modelJSON, pTag = tagJSON }, new AjaxOptions { HttpMethod = "POST" })
+                            @Html.ActionLink(@tag.mTitle, "AddTag", "Event", new { pModel = modelJSON, pTag = tagJSON }, new { HttpMethod = "POST",@class = "col-md-6 btn btn-default",
+                            style = "margin-right: 10px; margin-bottom: 10px; width:" + @length + "px; font-size: 25px"})*@
+                            @:<a href="#" class="col-md-@length  btn btn-default" style="margin-right: 10px; margin-bottom: 10px; font-size: 25px" onclick="addTag('@tagJSON')">@tag.mTitle</a>
+                        }
+                }
+            </div>
+        </td>
+    </tr>
+</table>
 
-    <script>
-        $('.single').pickmeup({
-            flat: true
+<script>
+    function addTag(tag) {
+        var model = document.getElementById("modelJSON");
+        $.post("/Event/AddTag", { pModel: model.value, pTag: tag })
+        .done(function (data) {
+            $('#event-content').html(data);
         });
-    </script>
+    }
+
+    function removeTag(tag) {
+        var model = document.getElementById("modelJSON");
+        $.post("/Event/RemoveTag", { pModel: model.value, pTag: tag })
+        .done(function (data) {
+            $('#event-content').html(data);
+        });
+    }
+
+    function chooseDate(date) {
+        var model = document.getElementById("modelJSON");
+        $.post("/Event/ChooseDate", { pModel: model.value, pDate: date })
+        .done(function (data) {
+            $('#event-content').html(data);
+        });
+    }
+</script>
+
+<script>
+    $('.single').pickmeup({
+        flat: true,
+        position: 'right',
+        before_show: function () {
+            input.pickmeup('set_date', input.val(), true);
+        },
+        change: function (formated) {
+            chooseDate(formated);
+        }
+    });
+
+    $('.single').pickmeup('set_date', '@Model.mChoosedData');
+</script>
 
 </div>
 
 <table class="table">
 
 @foreach (var item in Model.mEventsList) {
-    <tr>
-        <td>
-            <h4>@Html.DisplayFor(m => item.mTitle)</h4>
+<tr>
+    <td>
+        <h4>@Html.DisplayFor(m => item.mTitle)</h4>
             
-            @Html.DisplayFor(m => item.mStartDate)
-            -
-            @Html.DisplayFor(m => item.mEndDate)
-            <br />
-            @Html.DisplayFor(m => item.mDescription)
-            <br />
-            @foreach (var place in item.mPlace)
-            { 
-                @Html.ActionLink(place.mTitle, "Show", "Place", new { pId = place.mId }, new { })
-            }
-        </td>
-    </tr>
+        @Html.DisplayFor(m => item.mStartDate)
+        -
+        @Html.DisplayFor(m => item.mEndDate)
+        <br />
+        @Html.DisplayFor(m => item.mDescription)
+        <br />
+        @foreach (var place in item.mPlace)
+        { 
+            @Html.ActionLink(place.mTitle, "Show", "Place", new { pId = place.mId }, new { })
+        }
+    </td>
+</tr>
 }
 
 </table>
+</div>

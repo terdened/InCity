@@ -16,6 +16,7 @@ namespace InCity.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public ActionResult AddTag(String pModel, String pTag)
         {
             EventsListViewModel model = new System.Web.Script.Serialization.JavaScriptSerializer().
@@ -26,9 +27,10 @@ namespace InCity.Controllers
 
             model.mChoosedTagsList.Add(tag);
             model = new EventsListViewModel(model.mChoosedTagsList);
-            return View("Index", model);
+            return PartialView("Index", model);
         }
 
+        [HttpPost]
         public ActionResult RemoveTag(String pModel, String pTag)
         {
             EventsListViewModel model = new System.Web.Script.Serialization.JavaScriptSerializer().
@@ -39,7 +41,18 @@ namespace InCity.Controllers
 
             model.mChoosedTagsList.Remove(model.mChoosedTagsList.First(t=>t.mId==tag.mId));
             model = new EventsListViewModel(model.mChoosedTagsList);
-            return View("Index", model);
+            return PartialView("Index", model);
+        }
+
+        [HttpPost]
+        public ActionResult ChooseDate(String pModel, String pDate)
+        {
+            EventsListViewModel model = new System.Web.Script.Serialization.JavaScriptSerializer().
+                Deserialize<EventsListViewModel>(pModel);
+
+            DateTime date = DateTime.Parse(pDate);
+            model = new EventsListViewModel(date);
+            return PartialView("Index", model);
         }
     }
 }

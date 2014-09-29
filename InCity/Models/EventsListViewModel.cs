@@ -10,13 +10,13 @@ namespace InCity.Models
         public List<TagModel> mTagsList;
         public List<TagModel> mChoosedTagsList;
         public List<EventModels> mEventsList;
-        public DateTime mChoosedData;
+        public string mChoosedData;
 
         public EventsListViewModel()
         {
             InCityDBEntities db = new InCityDBEntities();
 
-            this.mChoosedData = DateTime.Today;
+            this.mChoosedData = DateTime.Today.ToString();
 
             this.mTagsList = new List<TagModel>();
             foreach(var tag in db.Tag)
@@ -29,13 +29,32 @@ namespace InCity.Models
                 mEventsList.Add(new EventModels(e));
         }
 
+        public EventsListViewModel(DateTime pDate)
+        {
+            InCityDBEntities db = new InCityDBEntities();
+
+            this.mChoosedData = pDate.ToString();
+
+            this.mTagsList = new List<TagModel>();
+            foreach (var tag in db.Tag)
+                mTagsList.Add(new TagModel(tag));
+
+            this.mChoosedTagsList = new List<TagModel>();
+
+            this.mEventsList = new List<EventModels>();
+
+            List<EventPlace> ep = db.EventPlace.Where(ev => ev.StartDate <= pDate && ev.EndDate >= pDate).ToList();
+            foreach (var e in ep)
+                mEventsList.Add(new EventModels(e.Event));
+        }
+
         public EventsListViewModel(List<TagModel> pChoosedTagsList)
         {
             if (pChoosedTagsList.Count > 0)
             {
                 InCityDBEntities db = new InCityDBEntities();
 
-                this.mChoosedData = DateTime.Today;
+                this.mChoosedData = DateTime.Today.ToString();
 
                 this.mTagsList = new List<TagModel>();
                 foreach (var tag in db.Tag)
@@ -66,7 +85,7 @@ namespace InCity.Models
             {
                 InCityDBEntities db = new InCityDBEntities();
 
-                this.mChoosedData = DateTime.Today;
+                this.mChoosedData = DateTime.Today.ToString();
 
                 this.mTagsList = new List<TagModel>();
                 foreach (var tag in db.Tag)

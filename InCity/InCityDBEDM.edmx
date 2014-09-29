@@ -17,8 +17,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Title" Type="nchar" MaxLength="50" Nullable="false" />
-          <Property Name="Description" Type="nchar" MaxLength="1000" />
+          <Property Name="Title" Type="ntext" Nullable="false" />
+          <Property Name="Description" Type="ntext" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "C:\USERS\ADMIN\DOCUMENTS\VISUAL STUDIO 2013\PROJECTS\INCITY\INCITY\APP_DATA\INCITYDB.MDF.dbo.EventPlace" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -49,15 +49,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Path" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Path" Type="ntext" Nullable="false" />
         </EntityType>
         <EntityType Name="Place">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Title" Type="nchar" MaxLength="100" Nullable="false" />
-          <Property Name="Address" Type="nchar" MaxLength="200" Nullable="false" />
+          <Property Name="Title" Type="ntext" Nullable="false" />
+          <Property Name="Address" Type="ntext" Nullable="false" />
           <Property Name="HeaderId" Type="int" />
         </EntityType>
         <EntityType Name="Tag">
@@ -65,9 +65,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Title" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Title" Type="ntext" Nullable="false" />
         </EntityType>
-        <Association Name="FK__EventPlac__Event__5BE2A6F2">
+        <Association Name="FK__EventPlac__Event__73BA3083">
           <End Role="Event" Type="Self.Event" Multiplicity="1" />
           <End Role="EventPlace" Type="Self.EventPlace" Multiplicity="*" />
           <ReferentialConstraint>
@@ -91,7 +91,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EventTag__EventI__6383C8BA">
+        <Association Name="FK__EventTag__EventI__74AE54BC">
           <End Role="Event" Type="Self.Event" Multiplicity="1" />
           <End Role="EventTag" Type="Self.EventTag" Multiplicity="*" />
           <ReferentialConstraint>
@@ -147,7 +147,7 @@
     [EventTag].[TagId] AS [TagId]
     FROM [dbo].[EventTag] AS [EventTag]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__EventPlac__Event__5BE2A6F2" Association="Self.FK__EventPlac__Event__5BE2A6F2">
+          <AssociationSet Name="FK__EventPlac__Event__73BA3083" Association="Self.FK__EventPlac__Event__73BA3083">
             <End Role="Event" EntitySet="Event" />
             <End Role="EventPlace" EntitySet="EventPlace" />
           </AssociationSet>
@@ -155,7 +155,7 @@
             <End Role="Place" EntitySet="Place" />
             <End Role="EventPlace" EntitySet="EventPlace" />
           </AssociationSet>
-          <AssociationSet Name="FK__EventTag__EventI__6383C8BA" Association="Self.FK__EventTag__EventI__6383C8BA">
+          <AssociationSet Name="FK__EventTag__EventI__74AE54BC" Association="Self.FK__EventTag__EventI__74AE54BC">
             <End Role="Event" EntitySet="Event" />
             <End Role="EventTag" EntitySet="EventTag" />
           </AssociationSet>
@@ -184,8 +184,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="EventPlace" Relationship="InCityDBModel.FK__EventPlac__Event__5BE2A6F2" FromRole="Event" ToRole="EventPlace" />
           <NavigationProperty Name="Tag" Relationship="InCityDBModel.EventTag" FromRole="Event" ToRole="Tag" />
         </EntityType>
@@ -218,8 +218,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="HeaderId" Type="Int32" />
           <NavigationProperty Name="Pictures" Relationship="InCityDBModel.FK__Place__HeaderId__4BAC3F29" FromRole="Place" ToRole="Pictures" />
           <NavigationProperty Name="EventPlace" Relationship="InCityDBModel.FK__EventPlac__Place__5CD6CB2B" FromRole="Place" ToRole="EventPlace" />
@@ -229,7 +229,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Path" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Path" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Place" Relationship="InCityDBModel.FK__Place__HeaderId__4BAC3F29" FromRole="Pictures" ToRole="Place" />
         </EntityType>
         <Association Name="FK__Place__HeaderId__4BAC3F29">
@@ -249,7 +249,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Event" Relationship="InCityDBModel.EventTag" FromRole="Tag" ToRole="Event" />
         </EntityType>
         <EntityType Name="EventPlace">

@@ -10,8 +10,8 @@ namespace InCity.Models
         public int mId;
         public string mTitle;
         public string mDescription;
-        public DateTime mStartDate;
-        public DateTime mEndDate;
+        public string mStartDate;
+        public string mEndDate;
         public List<PlaceModel> mPlace;
 
         public EventModels(Event pDBEvent)
@@ -20,8 +20,8 @@ namespace InCity.Models
             this.mTitle = pDBEvent.Title;
             this.mDescription = pDBEvent.Description;
 
-            this.mStartDate = pDBEvent.EventPlace.Min(ep => ep.StartDate);
-            this.mEndDate = pDBEvent.EventPlace.Max(ep => ep.EndDate);
+            this.mStartDate = pDBEvent.EventPlace.Min(ep => ep.StartDate).ToString();
+            this.mEndDate = pDBEvent.EventPlace.Max(ep => ep.EndDate).ToString();
 
             this.mPlace = new List<PlaceModel>();
 
