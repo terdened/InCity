@@ -188,6 +188,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InCityDBEDM.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventListItem.cs" />
     <Compile Include="Models\EventModels.cs" />
     <Compile Include="Models\EventsListViewModel.cs" />
     <Compile Include="Models\PlaceModel.cs" />

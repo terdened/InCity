@@ -9,9 +9,67 @@ namespace InCity.Models
     {
         public List<TagModel> mTagsList;
         public List<TagModel> mChoosedTagsList;
-        public List<EventModels> mEventsList;
+        public List<EventListItem> mEventsList;
         public string mChoosedData;
         public string mTitleDate;
+
+
+        public DateTime getLastEventDate()
+        {
+            InCityDBEntities db = new InCityDBEntities();
+            return db.EventPlace.Max(ep => ep.EndDate);
+        }
+
+        public void getEvents(DateTime pStartDate, DateTime pEndDate)
+        {
+            InCityDBEntities db = new InCityDBEntities();
+            mEventsList = new List<EventListItem>();
+
+            DateTime startDate = pStartDate;
+            DateTime stopDate = pEndDate;
+            DateTime currentDate = startDate;
+
+            List<Event> eventsWithDate = (from e in db.Event
+                                          join ep in db.EventPlace on e.Id equals ep.EventId
+                                          where (ep.StartDate <= startDate && ep.EndDate >= startDate) ||
+                                                  (ep.StartDate <= stopDate && ep.EndDate >= stopDate) ||
+                                               (ep.StartDate >= startDate && ep.StartDate <= stopDate) ||
+                                                   (ep.EndDate <= startDate && ep.EndDate >= stopDate)
+                                          select e).ToList();
+
+            List<EventPlace> eventPlacesWithDate = db.EventPlace.Where(ev => (ev.StartDate <= startDate && ev.EndDate >= startDate) ||
+                                                                               (ev.StartDate <= stopDate && ev.EndDate >= stopDate) ||
+                                                                            (ev.StartDate >= startDate && ev.StartDate <= stopDate) ||
+                                                                               (ev.EndDate <= startDate && ev.EndDate >= stopDate)).ToList();
+
+            while (currentDate <= stopDate)
+            {
+                List<Event> eventsInCurrentDate = (from e in eventsWithDate
+                                                   join ep in eventPlacesWithDate on e.Id equals ep.EventId
+                                                   where (ep.StartDate <= currentDate && ep.EndDate >= currentDate)
+                                                   select e).ToList();
+
+                List<Event> filteredEvents = new List<Event>();
+
+                foreach (var tag in mChoosedTagsList)
+                    foreach (var e in eventsInCurrentDate)
+                        if (e.Tag.Contains(tag.mTag))
+                            filteredEvents.Add(e);
+
+                if (filteredEvents.Count>0)
+                {
+                    foreach (var e in filteredEvents)
+                        mEventsList.Add(new EventListItem(e, currentDate, eventPlacesWithDate));
+                }
+                else
+                {
+                    foreach (var e in eventsInCurrentDate)
+                        mEventsList.Add(new EventListItem(e, currentDate, eventPlacesWithDate));
+                }
+
+                currentDate = currentDate.AddDays(1);
+            }
+        }
 
         public EventsListViewModel()
         {
@@ -26,9 +84,7 @@ namespace InCity.Models
 
             this.mChoosedTagsList = new List<TagModel>();
 
-            this.mEventsList = new List<EventModels>();
-            foreach (var e in db.Event)
-                mEventsList.Add(new EventModels(e));
+            getEvents(DateTime.Today, getLastEventDate());
         }
 
         public EventsListViewModel(DateTime pDate)
@@ -51,11 +107,7 @@ namespace InCity.Models
 
             this.mChoosedTagsList = new List<TagModel>();
 
-            this.mEventsList = new List<EventModels>();
-
-            List<EventPlace> ep = db.EventPlace.Where(ev => ev.StartDate <= pDate && ev.EndDate >= pDate).ToList();
-            foreach (var e in ep)
-                mEventsList.Add(new EventModels(e.Event));
+            getEvents(DateTime.Parse(this.mChoosedData), DateTime.Parse(this.mChoosedData));
         }
 
         public EventsListViewModel(DateTime pStartDate, DateTime pEndDate)
@@ -71,14 +123,16 @@ namespace InCity.Models
 
             this.mChoosedTagsList = new List<TagModel>();
 
-            this.mEventsList = new List<EventModels>();
+            getEvents(pStartDate, pEndDate);
+
+            /*this.mEventsList = new List<EventModels>();
 
             List<EventPlace> ep = db.EventPlace.Where(ev => (ev.StartDate <= pStartDate && ev.EndDate >= pStartDate)||
                                                             (ev.StartDate <= pEndDate && ev.EndDate >= pEndDate) ||
                                                             (ev.StartDate >= pStartDate && ev.StartDate <= pEndDate) ||
                                                             (ev.EndDate <= pStartDate && ev.EndDate >= pEndDate)).ToList();
             foreach (var e in ep)
-                mEventsList.Add(new EventModels(e.Event));
+                mEventsList.Add(new EventModels(e.Event));*/
         }
 
         public EventsListViewModel(List<TagModel> pChoosedTagsList)
@@ -96,24 +150,7 @@ namespace InCity.Models
 
                 this.mChoosedTagsList = pChoosedTagsList;
 
-                this.mEventsList = new List<EventModels>();
-
-                List<Event> eventList = new List<Event>();
-                foreach (var ct in mChoosedTagsList)
-                {
-                    Tag t = db.Tag.First(tag => tag.Id == ct.mId);
-                    List<Event> events = new List<Event>();
-
-                    foreach (var e in db.Event)
-                    {
-                        if (e.Tag.Contains(t))
-                            events.Add(e);
-                    }
-                    eventList.AddRange(events);
-                }
-
-                foreach (var e in eventList)
-                    this.mEventsList.Add(new EventModels(e));
+                getEvents(DateTime.Today, getLastEventDate());
             }
             else
             {
@@ -128,9 +165,7 @@ namespace InCity.Models
 
                 this.mChoosedTagsList = new List<TagModel>();
 
-                this.mEventsList = new List<EventModels>();
-                foreach (var e in db.Event)
-                    mEventsList.Add(new EventModels(e));   
+                getEvents(DateTime.Today, getLastEventDate()); 
             }
         }
 
