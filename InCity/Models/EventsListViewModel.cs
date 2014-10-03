@@ -49,17 +49,19 @@ namespace InCity.Models
                                                    where (ep.StartDate <= currentDate && ep.EndDate >= currentDate)
                                                    select e).ToList();
 
-                List<Event> filteredEvents = new List<Event>();
-
-                foreach (var tag in mChoosedTagsList)
-                    foreach (var e in eventsInCurrentDate)
-                        if (e.Tag.Contains(tag.mTag))
-                            filteredEvents.Add(e);
-
-                if (filteredEvents.Count>0)
+                if (this.mChoosedTagsList.Count > 0)
                 {
+                    List<Event> filteredEvents = new List<Event>();
+
+                    foreach (var tag in mChoosedTagsList)
+                        foreach (var e in eventsInCurrentDate)
+                            if (e.Tag.Where(t => t.Id == tag.mId).Count() > 0)
+                                filteredEvents.Add(e);
+
+                 
                     foreach (var e in filteredEvents)
                         mEventsList.Add(new EventListItem(e, currentDate, eventPlacesWithDate));
+                    
                 }
                 else
                 {
