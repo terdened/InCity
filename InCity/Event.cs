@@ -23,8 +23,10 @@ namespace InCity
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public Nullable<int> PosterId { get; set; }
     
         public virtual ICollection<EventPlace> EventPlace { get; set; }
         public virtual ICollection<Tag> Tag { get; set; }
+        public virtual Pictures Pictures { get; set; }
     }
 }

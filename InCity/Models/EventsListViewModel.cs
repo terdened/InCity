@@ -31,10 +31,11 @@ namespace InCity.Models
 
             List<Event> eventsWithDate = (from e in db.Event
                                           join ep in db.EventPlace on e.Id equals ep.EventId
-                                          where (ep.StartDate <= startDate && ep.EndDate >= startDate) ||
+                                          where ((ep.StartDate <= startDate && ep.EndDate >= startDate) ||
                                                   (ep.StartDate <= stopDate && ep.EndDate >= stopDate) ||
                                                (ep.StartDate >= startDate && ep.StartDate <= stopDate) ||
-                                                   (ep.EndDate <= startDate && ep.EndDate >= stopDate)
+                                                   (ep.EndDate <= startDate && ep.EndDate >= stopDate))&&
+                                                   (ep.EventId == e.Id)
                                           select e).ToList();
 
             List<EventPlace> eventPlacesWithDate = db.EventPlace.Where(ev => (ev.StartDate <= startDate && ev.EndDate >= startDate) ||
@@ -44,10 +45,8 @@ namespace InCity.Models
 
             while (currentDate <= stopDate)
             {
-                List<Event> eventsInCurrentDate = (from e in eventsWithDate
-                                                   join ep in eventPlacesWithDate on e.Id equals ep.EventId
-                                                   where (ep.StartDate <= currentDate && ep.EndDate >= currentDate)
-                                                   select e).ToList();
+                List<Event> eventsInCurrentDate = eventsWithDate.Where(e => e.EventPlace.Where(ep => (ep.StartDate <= currentDate && ep.EndDate >= currentDate)).Count()>0).ToList();
+                eventsInCurrentDate = eventsInCurrentDate.Distinct().ToList();
 
                 if (this.mChoosedTagsList.Count > 0)
                 {

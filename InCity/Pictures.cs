@@ -17,11 +17,13 @@ namespace InCity
         public Pictures()
         {
             this.Place = new HashSet<Place>();
+            this.Event = new HashSet<Event>();
         }
     
         public int Id { get; set; }
         public string Path { get; set; }
     
         public virtual ICollection<Place> Place { get; set; }
+        public virtual ICollection<Event> Event { get; set; }
     }
 }

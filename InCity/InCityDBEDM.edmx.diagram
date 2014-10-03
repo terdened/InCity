@@ -15,6 +15,7 @@
         <AssociationConnector Association="InCityDBModel.FK__EventPlac__Event__5BE2A6F2" />
         <AssociationConnector Association="InCityDBModel.FK__EventPlac__Place__5CD6CB2B" />
         <AssociationConnector Association="InCityDBModel.EventTag" />
+        <AssociationConnector Association="InCityDBModel.FK__Event__PosterId__01142BA1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

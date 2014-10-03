@@ -1,0 +1,25 @@
+﻿@model IEnumerable<InCity.Models.EventListItem>
+
+<table class="table-condensed" width="100%">
+    @{
+        ViewBag.date = DateTime.Parse(Model.First().mDate);
+        Html.RenderPartial("DateTitle");
+    }
+    @{
+        DateTime prevDate = DateTime.Parse(Model.First().mDate);
+        foreach (var item in Model)
+        {
+            if (prevDate != DateTime.Parse(item.mDate))
+            {
+                ViewBag.date = DateTime.Parse(item.mDate);
+                Html.RenderPartial("DateTitle");
+                prevDate = DateTime.Parse(item.mDate);
+            }
+            <tr>
+                <td>
+                    @{Html.RenderPartial("EventListItem", item);}
+                </td>
+            </tr>
+        }
+    }
+</table>

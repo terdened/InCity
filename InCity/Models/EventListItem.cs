@@ -11,6 +11,7 @@ namespace InCity.Models
         public string mDate;
         public string mTitle;
         public string mDescription;
+        public string mPoster;
         public List<PlaceModel> mPlaces;
 
         public EventListItem()
@@ -32,6 +33,16 @@ namespace InCity.Models
             this.mDescription = pEvendDB.Description;
             this.mId = pEvendDB.Id;
             this.mTitle = pEvendDB.Title;
+            this.mDate = pDate.ToString();
+
+            if (pEvendDB.PosterId != null)
+            {
+                this.mPoster = pEvendDB.Pictures.Path;
+            }
+            else
+            {
+                this.mPoster = "Content/Img/Posters/noposter.jpg";
+            }
         }
     }
 }

@@ -155,27 +155,8 @@
 
 </div>
 
-<table class="table">
 
-@foreach (var item in Model.mEventsList) {
-<tr>
-    <td>
-        <h4>@Html.DisplayFor(m => item.mTitle)</h4>
-        @*
-    @Html.DisplayFor(m => item.mStartDate)
-    -
-    @Html.DisplayFor(m => item.mEndDate)
-    <br />
-    @Html.DisplayFor(m => item.mDescription)
-    <br />
-    @foreach (var place in item.mPlace)
-    {
-        @Html.ActionLink(place.mTitle, "Show", "Place", new { pId = place.mId }, new { })
-        @:<br />
-    }*@    
-    </td>
-</tr>
+@{
+    Html.RenderPartial("EventsList", Model.mEventsList);
 }
-
-</table>
 </div>

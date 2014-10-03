@@ -12,6 +12,7 @@
     <EntitySetMapping Name="Event">
       <EntityTypeMapping TypeName="InCityDBModel.Event">
         <MappingFragment StoreEntitySet="Event">
+          <ScalarProperty Name="PosterId" ColumnName="PosterId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Description" ColumnName="Description" />

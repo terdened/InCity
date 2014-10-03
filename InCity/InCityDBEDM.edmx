@@ -19,6 +19,7 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Title" Type="ntext" Nullable="false" />
           <Property Name="Description" Type="ntext" />
+          <Property Name="PosterId" Type="int" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "C:\USERS\ADMIN\DOCUMENTS\VISUAL STUDIO 2013\PROJECTS\INCITY\INCITY\APP_DATA\INCITYDB.MDF.dbo.EventPlace" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -67,6 +68,18 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Title" Type="ntext" Nullable="false" />
         </EntityType>
+        <Association Name="FK__Event__PosterId__01142BA1">
+          <End Role="Pictures" Type="Self.Pictures" Multiplicity="0..1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pictures">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="PosterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__EventPlac__Event__73BA3083">
           <End Role="Event" Type="Self.Event" Multiplicity="1" />
           <End Role="EventPlace" Type="Self.EventPlace" Multiplicity="*" />
@@ -147,6 +160,10 @@
     [EventTag].[TagId] AS [TagId]
     FROM [dbo].[EventTag] AS [EventTag]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK__Event__PosterId__01142BA1" Association="Self.FK__Event__PosterId__01142BA1">
+            <End Role="Pictures" EntitySet="Pictures" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
           <AssociationSet Name="FK__EventPlac__Event__73BA3083" Association="Self.FK__EventPlac__Event__73BA3083">
             <End Role="Event" EntitySet="Event" />
             <End Role="EventPlace" EntitySet="EventPlace" />
@@ -188,6 +205,8 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="EventPlace" Relationship="InCityDBModel.FK__EventPlac__Event__5BE2A6F2" FromRole="Event" ToRole="EventPlace" />
           <NavigationProperty Name="Tag" Relationship="InCityDBModel.EventTag" FromRole="Event" ToRole="Tag" />
+          <Property Name="PosterId" Type="Int32" />
+          <NavigationProperty Name="Pictures" Relationship="InCityDBModel.FK__Event__PosterId__01142BA1" FromRole="Event" ToRole="Pictures" />
         </EntityType>
         <EntityContainer Name="InCityDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="City" EntityType="Self.City" />
@@ -212,6 +231,10 @@
             <End Role="Event" EntitySet="Event" />
             <End Role="Tag" EntitySet="Tag" />
           </AssociationSet>
+          <AssociationSet Name="FK__Event__PosterId__01142BA1" Association="InCityDBModel.FK__Event__PosterId__01142BA1">
+            <End Role="Pictures" EntitySet="Pictures" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Place">
           <Key>
@@ -231,6 +254,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Path" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Place" Relationship="InCityDBModel.FK__Place__HeaderId__4BAC3F29" FromRole="Pictures" ToRole="Place" />
+          <NavigationProperty Name="Event" Relationship="InCityDBModel.FK__Event__PosterId__01142BA1" FromRole="Pictures" ToRole="Event" />
         </EntityType>
         <Association Name="FK__Place__HeaderId__4BAC3F29">
           <End Type="InCityDBModel.Pictures" Role="Pictures" Multiplicity="0..1" />
@@ -294,6 +318,18 @@
           <End Type="InCityDBModel.Event" Role="Event" Multiplicity="*" />
           <End Type="InCityDBModel.Tag" Role="Tag" Multiplicity="*" />
         </Association>
+        <Association Name="FK__Event__PosterId__01142BA1">
+          <End Type="InCityDBModel.Pictures" Role="Pictures" Multiplicity="0..1" />
+          <End Type="InCityDBModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pictures">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="PosterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -311,6 +347,7 @@
           <EntitySetMapping Name="Event">
             <EntityTypeMapping TypeName="InCityDBModel.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="PosterId" ColumnName="PosterId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

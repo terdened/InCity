@@ -16,6 +16,8 @@
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="EventPlace" Relationship="InCityDBModel.FK__EventPlac__Event__5BE2A6F2" FromRole="Event" ToRole="EventPlace" />
     <NavigationProperty Name="Tag" Relationship="InCityDBModel.EventTag" FromRole="Event" ToRole="Tag" />
+    <Property Name="PosterId" Type="Int32" />
+    <NavigationProperty Name="Pictures" Relationship="InCityDBModel.FK__Event__PosterId__01142BA1" FromRole="Event" ToRole="Pictures" />
   </EntityType>
   <EntityContainer Name="InCityDBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="City" EntityType="Self.City" />
@@ -40,6 +42,10 @@
       <End Role="Event" EntitySet="Event" />
       <End Role="Tag" EntitySet="Tag" />
     </AssociationSet>
+    <AssociationSet Name="FK__Event__PosterId__01142BA1" Association="InCityDBModel.FK__Event__PosterId__01142BA1">
+      <End Role="Pictures" EntitySet="Pictures" />
+      <End Role="Event" EntitySet="Event" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Place">
     <Key>
@@ -59,6 +65,7 @@
     <Property Name="Id" Type="Int32" Nullable="false" />
     <Property Name="Path" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Place" Relationship="InCityDBModel.FK__Place__HeaderId__4BAC3F29" FromRole="Pictures" ToRole="Place" />
+    <NavigationProperty Name="Event" Relationship="InCityDBModel.FK__Event__PosterId__01142BA1" FromRole="Pictures" ToRole="Event" />
   </EntityType>
   <Association Name="FK__Place__HeaderId__4BAC3F29">
     <End Type="InCityDBModel.Pictures" Role="Pictures" Multiplicity="0..1" />
@@ -121,5 +128,17 @@
   <Association Name="EventTag">
     <End Type="InCityDBModel.Event" Role="Event" Multiplicity="*" />
     <End Type="InCityDBModel.Tag" Role="Tag" Multiplicity="*" />
+  </Association>
+  <Association Name="FK__Event__PosterId__01142BA1">
+    <End Type="InCityDBModel.Pictures" Role="Pictures" Multiplicity="0..1" />
+    <End Type="InCityDBModel.Event" Role="Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pictures">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="PosterId" />
+      </Dependent>
+    </ReferentialConstraint>
   </Association>
 </Schema>

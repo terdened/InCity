@@ -269,6 +269,9 @@
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Place\Show.cshtml" />
     <Content Include="Views\Place\Index.cshtml" />
+    <Content Include="Views\Event\EventsList.cshtml" />
+    <Content Include="Views\Event\DateTitle.cshtml" />
+    <Content Include="Views\Event\EventListItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
