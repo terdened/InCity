@@ -1,0 +1,20 @@
+﻿@model IEnumerable<InCity.Models.EventListItem>
+
+<table style="background-color: #eee; border-radius: 7px;" width="100%">
+    <tr><td class="h4" style="padding: 10px; background-color: #545454; color: whitesmoke; border-radius: 7px">@ViewBag.tag</td></tr>
+    <tr>
+        <td>
+            @foreach (var e in Model)
+            {
+                <table width="100%">
+                    <tr>
+                        <td>
+                            @{Html.RenderPartial("EventListItem", e);}
+                        </td>
+                    </tr>
+                </table>
+            }
+        </td>
+    </tr>
+</table>
+

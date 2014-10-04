@@ -13,6 +13,7 @@ namespace InCity.Models
         public string mDescription;
         public string mPoster;
         public List<PlaceModel> mPlaces;
+        public List<TagModel> mTags;
 
         public EventListItem()
         {
@@ -29,6 +30,11 @@ namespace InCity.Models
 
             foreach (var place in eventPlacesInDate)
                 mPlaces.Add(new PlaceModel(place.Place));
+
+            mTags = new List<TagModel>();
+
+            foreach (var tag in pEvendDB.Tag)
+                mTags.Add(new TagModel(tag));
 
             this.mDescription = pEvendDB.Description;
             this.mId = pEvendDB.Id;

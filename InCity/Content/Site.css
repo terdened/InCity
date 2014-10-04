@@ -37,3 +37,17 @@ textarea {
     color: #ffe; /* Цвет ссылки */
     -webkit-filter: grayscale(0%);
 }
+
+.event-list-btn {
+    color: #333; /* Цвет ссылок */
+    background-color: #eee; /* Цвет фона под ссылкой */
+    transition: 0.4s;
+    text-align: center;
+    padding: 0px
+}
+
+.event-list-btn:hover {
+    background-color: #545454; /* Цвет фона под ссылкой */
+    color: #ffffff; /* Цвет ссылки */
+    cursor:pointer;
+}

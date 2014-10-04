@@ -1,25 +1,39 @@
-﻿@model IEnumerable<InCity.Models.EventListItem>
+﻿@model InCity.Models.EventsListViewModel
 
 <table class="table-condensed" width="100%">
-    @{
-        ViewBag.date = DateTime.Parse(Model.First().mDate);
-        Html.RenderPartial("DateTitle");
-    }
-    @{
-        DateTime prevDate = DateTime.Parse(Model.First().mDate);
-        foreach (var item in Model)
+        @{
+        List<DateTime> datesList = new List<DateTime>();
+
+        foreach (var e in Model.mEventsList)
         {
-            if (prevDate != DateTime.Parse(item.mDate))
+            if (!datesList.Contains(DateTime.Parse(e.mDate)))
             {
-                ViewBag.date = DateTime.Parse(item.mDate);
-                Html.RenderPartial("DateTitle");
-                prevDate = DateTime.Parse(item.mDate);
+                datesList.Add(DateTime.Parse(e.mDate));
             }
-            <tr>
-                <td>
-                    @{Html.RenderPartial("EventListItem", item);}
-                </td>
-            </tr>
+        }
+
+        foreach (var date in datesList)
+        {
+            ViewBag.date = date;
+            Html.RenderPartial("DateTitle");
+            foreach (var tag in Model.mTagsList)
+            {
+                List<InCity.Models.EventListItem> eventsInCurertDate = Model.mEventsList.Where(e => e.mDate == date.ToString()).ToList();
+
+                List<InCity.Models.EventListItem> eventsWithTag = eventsInCurertDate.Where(e => e.mTags.Where(t=>t.mId == tag.mId).Count() > 0).ToList();
+
+                if (eventsWithTag.Count>0)
+                {
+                    <tr>
+                        <td>
+                            @{
+                                ViewBag.tag = tag.mTitle;
+                                Html.RenderPartial("CategoryListView", eventsWithTag);
+                            }
+                        </td>
+                    </tr>
+                }
+            }
         }
     }
 </table>

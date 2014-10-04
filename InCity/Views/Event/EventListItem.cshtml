@@ -3,18 +3,15 @@
 <table width=100% border="0" style="padding: 0px">
     <tr>
         <td style="text-align: center;" width="33%">
-            <h4>
                 @Model.mTitle
-            </h4>
         </td>
-        <td>
-            <table width=100% border="1" style="padding: 0px;">
+        <td width="50%">
+            <table width=100% style="padding: 0px;">
                 @foreach (var place in Model.mPlaces)
                 {
                     <tr>
-                        <td style="text-align: center; border-radius: 7px;" width="50%">
-                            @Html.ActionLink(place.mTitle, "Show", "Place", new { pid = place.mId }, new { })
-                            <br />
+                        <td width="50%" class="event-list-btn" onclick="location.href='Place/Show?pId=@place.mId'">
+                            @place.mTitle
                         </td>
                         <td style="text-align: center;" width="50%">
                             Цены
@@ -22,6 +19,11 @@
                     </tr>
                 }
             </table>
+        </td>
+        <td class="event-list-btn" width="17%">
+            <h4>
+                Подробнее
+            </h4>
         </td>
     </tr>
 </table>
