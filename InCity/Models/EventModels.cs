@@ -12,6 +12,7 @@ namespace InCity.Models
         public string mDescription;
         public string mStartDate;
         public string mEndDate;
+        public string mPoster;
         public List<PlaceModel> mPlace;
 
         public EventModels(Event pDBEvent)
@@ -27,6 +28,15 @@ namespace InCity.Models
 
             foreach(var ep in pDBEvent.EventPlace)
                 this.mPlace.Add(new PlaceModel(ep.Place));
+
+            if (pDBEvent.PosterId != null)
+            {
+                this.mPoster = pDBEvent.Pictures.Path;
+            }
+            else
+            {
+                this.mPoster = "Content/Img/Posters/noposter.jpg";
+            }
         }
 
         public EventModels()

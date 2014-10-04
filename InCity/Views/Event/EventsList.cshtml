@@ -36,4 +36,9 @@
             }
         }
     }
+
+    @if(Model.mEventsList.Count == 0)
+    {
+        <h4 style="padding-left: 20px">По вашему запросу не найдено ни одного события.</h4>
+    }
 </table>

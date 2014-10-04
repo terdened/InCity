@@ -18,6 +18,7 @@ namespace InCity
         public int PlaceId { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
+        public string Price { get; set; }
     
         public virtual Event Event { get; set; }
         public virtual Place Place { get; set; }

@@ -29,6 +29,7 @@
     <Property Name="PlaceId" Type="int" Nullable="false" />
     <Property Name="StartDate" Type="datetime" Nullable="false" />
     <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="Price" Type="ntext" />
   </EntityType>
   <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "C:\USERS\ADMIN\DOCUMENTS\VISUAL STUDIO 2013\PROJECTS\INCITY\INCITY\APP_DATA\INCITYDB.MDF.dbo.EventTag" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -146,7 +147,8 @@
     [EventPlace].[EventId] AS [EventId], 
     [EventPlace].[PlaceId] AS [PlaceId], 
     [EventPlace].[StartDate] AS [StartDate], 
-    [EventPlace].[EndDate] AS [EndDate]
+    [EventPlace].[EndDate] AS [EndDate], 
+    [EventPlace].[Price] AS [Price]
     FROM [dbo].[EventPlace] AS [EventPlace]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="EventTag" EntityType="Self.EventTag" store:Type="Tables" store:Schema="dbo">

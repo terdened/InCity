@@ -1,6 +1,7 @@
 ﻿<tr>
     <td style="text-align: center;">
         <p class="h3">
+            -
             @if (DateTime.Today == ViewBag.date)
             {
                 @:Сегодня
@@ -19,6 +20,7 @@
             {
                 @:@ViewBag.date.ToString("d")
             }
+            -
         </p>
     </td>
 </tr>

@@ -48,6 +48,7 @@
     <EntitySetMapping Name="EventPlace">
       <EntityTypeMapping TypeName="InCityDBModel.EventPlace">
         <MappingFragment StoreEntitySet="EventPlace">
+          <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />

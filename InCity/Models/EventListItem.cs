@@ -13,6 +13,7 @@ namespace InCity.Models
         public string mDescription;
         public string mPoster;
         public List<PlaceModel> mPlaces;
+        public List<string> mPrices;
         public List<TagModel> mTags;
 
         public EventListItem()
@@ -27,9 +28,16 @@ namespace InCity.Models
             //List<EventPlace> eventPlaces = db.EventPlace.Where(ep => ep.EventId == pEvendDB.Id).ToList();
             List<EventPlace> eventPlacesInDate = pEP.Where(ep => ep.EventId == pEvendDB.Id && ep.StartDate <= pDate && ep.EndDate >= pDate).ToList();
             mPlaces = new List<PlaceModel>();
+            mPrices = new List<string>();
 
             foreach (var place in eventPlacesInDate)
+            {
                 mPlaces.Add(new PlaceModel(place.Place));
+                if(place.Price!=null)
+                    mPrices.Add(place.Price);
+                else
+                    mPrices.Add("-");
+            }
 
             mTags = new List<TagModel>();
 

@@ -34,6 +34,7 @@
           <Property Name="PlaceId" Type="int" Nullable="false" />
           <Property Name="StartDate" Type="datetime" Nullable="false" />
           <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="Price" Type="ntext" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "C:\USERS\ADMIN\DOCUMENTS\VISUAL STUDIO 2013\PROJECTS\INCITY\INCITY\APP_DATA\INCITYDB.MDF.dbo.EventTag" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -151,7 +152,8 @@
     [EventPlace].[EventId] AS [EventId], 
     [EventPlace].[PlaceId] AS [PlaceId], 
     [EventPlace].[StartDate] AS [StartDate], 
-    [EventPlace].[EndDate] AS [EndDate]
+    [EventPlace].[EndDate] AS [EndDate], 
+    [EventPlace].[Price] AS [Price]
     FROM [dbo].[EventPlace] AS [EventPlace]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="EventTag" EntityType="Self.EventTag" store:Type="Tables" store:Schema="dbo">
@@ -289,6 +291,7 @@
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Event" Relationship="InCityDBModel.FK__EventPlac__Event__5BE2A6F2" FromRole="EventPlace" ToRole="Event" />
           <NavigationProperty Name="Place" Relationship="InCityDBModel.FK__EventPlac__Place__5CD6CB2B" FromRole="EventPlace" ToRole="Place" />
+          <Property Name="Price" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK__EventPlac__Event__5BE2A6F2">
           <End Type="InCityDBModel.Event" Role="Event" Multiplicity="1" />
@@ -383,6 +386,7 @@
           <EntitySetMapping Name="EventPlace">
             <EntityTypeMapping TypeName="InCityDBModel.EventPlace">
               <MappingFragment StoreEntitySet="EventPlace">
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />

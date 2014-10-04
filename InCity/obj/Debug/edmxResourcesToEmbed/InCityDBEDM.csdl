@@ -100,6 +100,7 @@
     <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="Event" Relationship="InCityDBModel.FK__EventPlac__Event__5BE2A6F2" FromRole="EventPlace" ToRole="Event" />
     <NavigationProperty Name="Place" Relationship="InCityDBModel.FK__EventPlac__Place__5CD6CB2B" FromRole="EventPlace" ToRole="Place" />
+    <Property Name="Price" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK__EventPlac__Event__5BE2A6F2">
     <End Type="InCityDBModel.Event" Role="Event" Multiplicity="1" />

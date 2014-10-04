@@ -16,6 +16,15 @@ namespace InCity.Controllers
             return View(model);
         }
 
+        public ActionResult Show(int pId)
+        {
+            InCityDBEntities db = new InCityDBEntities();
+
+            Event eventDB = db.Event.First(e=>e.Id == pId);
+            EventModels model = new EventModels(eventDB);
+            return View(model);
+        }
+
         [HttpPost]
         public ActionResult AddTag(String pModel, String pTag)
         {
