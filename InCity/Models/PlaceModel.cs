@@ -24,6 +24,20 @@ namespace InCity.Models
                 mHeader = "";
         }
 
+        public PlaceModel(int pId)
+        {
+            InCityDBEntities db = new InCityDBEntities();
+            Place place = db.Place.First(p => p.Id == pId);
+            this.mId = place.Id;
+            this.mTitle = place.Title;
+            this.mAddress = place.Address;
+
+            if (place.HeaderId != null)
+                mHeader = place.Pictures.Path;
+            else
+                mHeader = "";
+        }
+
         public PlaceModel(String pAddress)
         {
             mAddress = pAddress;

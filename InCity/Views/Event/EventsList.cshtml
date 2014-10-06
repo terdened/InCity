@@ -15,7 +15,7 @@
         foreach (var date in datesList)
         {
             ViewBag.date = date;
-            Html.RenderPartial("DateTitle");
+            Html.RenderPartial("../Event/DateTitle");
             foreach (var tag in Model.mTagsList)
             {
                 List<InCity.Models.EventListItem> eventsInCurertDate = Model.mEventsList.Where(e => e.mDate == date.ToString()).ToList();
@@ -28,7 +28,7 @@
                         <td>
                             @{
                                 ViewBag.tag = tag.mTitle;
-                                Html.RenderPartial("CategoryListView", eventsWithTag);
+                                Html.RenderPartial("../Event/CategoryListView", eventsWithTag);
                             }
                         </td>
                     </tr>

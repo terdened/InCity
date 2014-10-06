@@ -1,27 +1,65 @@
-﻿@model InCity.Models.PlaceModel
+﻿@model InCity.Models.PlaceViewModel
 
 @{ 
     ViewBag.Title = "Места";
 }
 
-@if (Model.mHeader != "")
+@if (Model.mPlace.mHeader != "")
 {
-    <div style="text-align: center; height: 150px; background: url(../../@Model.mHeader) no-repeat center center;">
-        <div style="color: whitesmoke; font-size: 60px; padding-top:35px">@Html.DisplayFor(m => Model.mTitle)</div>
-    </div>
+    <div style="text-align: center; height: 150px; background: url(../../@Model.mPlace.mHeader) no-repeat center center;">
+            <div style="color: whitesmoke; font-size: 60px; padding-top:35px">@Html.DisplayFor(m => Model.mPlace.mTitle)</div>
+        </div>
 }
 else
 {
     <div style="text-align: center; height: 150px; background: url(../../Content/Img/Headers/1.jpg) no-repeat center center;">
-        <div style="color: whitesmoke; font-size: 60px; padding-top:35px">@Html.DisplayFor(m => Model.mTitle)</div>
-    </div>
+            <div style="color: whitesmoke; font-size: 60px; padding-top:35px">@Html.DisplayFor(m => Model.mPlace.mTitle)</div>
+        </div>
 }
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-    </dl>
-</div>
-<p>
-    <b>Адрес:</b> @Html.DisplayFor(m => Model.mAddress)
-</p>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+        </dl>
+    </div>
+    <p>
+        <table width="100%">
+            <tr>
+                <td valign="top" style="padding-left: 20px">
+                    <b>Адрес:</b> @Html.DisplayFor(m => Model.mPlace.mAddress)
+                    <br />
+                    <b>Тип:</b>
+                    @foreach (var type in Model.mTypes)
+                    {
+                        @:@type.mTitle
+                            if (type != Model.mTypes.Last())
+                            {
+                                @:|
+                            }
+                    }
+                    <br />
+                </td>
+                <td align="right" style="padding-right: 20px">
+                    <img src="http://maps.googleapis.com/maps/api/staticmap?center=@Model.mPlace.mAddress Новокузнецк&zoom=15&size=400x300"></img>
+                </td>
+            </tr>
+        </table>
+    </p>
+
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" style="text-decoration: none;">
+                <div class="panel-heading event-list-btn" style="padding: 5px;">
+                    <h4 class="panel-title" style="font-size: 25px; display: inline;">
+                        <b>События</b>
+                    </h4>
+                </div>
+            </a>
+            <div id="collapseOne" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{Html.RenderPartial("../Event/EventsList", Model.mEventList);}
+                </div>
+            </div>
+        </div>
+    </div>
+

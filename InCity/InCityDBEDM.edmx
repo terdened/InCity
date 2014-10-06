@@ -62,7 +62,24 @@
           <Property Name="Address" Type="ntext" Nullable="false" />
           <Property Name="HeaderId" Type="int" />
         </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "C:\USERS\ADMIN\DOCUMENTS\VISUAL STUDIO 2013\PROJECTS\INCITY\INCITY\APP_DATA\INCITYDB.MDF.dbo.PlaceType" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="PlaceType">
+          <Key>
+            <PropertyRef Name="PlaceId" />
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="PlaceId" Type="int" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="ntext" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Type">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -141,12 +158,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PlaceType__Place__17036CC0">
+          <End Role="Place" Type="Self.Place" Multiplicity="1" />
+          <End Role="PlaceType" Type="Self.PlaceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlaceType">
+              <PropertyRef Name="PlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PlaceType__TypeI__17F790F9">
+          <End Role="Type" Type="Self.Type" Multiplicity="1" />
+          <End Role="PlaceType" Type="Self.PlaceType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlaceType">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище InCityDBModelContainer">
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventPlace" EntityType="Self.EventPlace" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [EventPlace].[EventId] AS [EventId], 
@@ -161,6 +203,12 @@
     [EventTag].[EventId] AS [EventId], 
     [EventTag].[TagId] AS [TagId]
     FROM [dbo].[EventTag] AS [EventTag]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PlaceType" EntityType="Self.PlaceType" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PlaceType].[PlaceId] AS [PlaceId], 
+    [PlaceType].[TypeId] AS [TypeId]
+    FROM [dbo].[PlaceType] AS [PlaceType]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__Event__PosterId__01142BA1" Association="Self.FK__Event__PosterId__01142BA1">
             <End Role="Pictures" EntitySet="Pictures" />
@@ -185,6 +233,14 @@
           <AssociationSet Name="FK__Place__HeaderId__4BAC3F29" Association="Self.FK__Place__HeaderId__4BAC3F29">
             <End Role="Pictures" EntitySet="Pictures" />
             <End Role="Place" EntitySet="Place" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PlaceType__Place__17036CC0" Association="Self.FK__PlaceType__Place__17036CC0">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="PlaceType" EntitySet="PlaceType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PlaceType__TypeI__17F790F9" Association="Self.FK__PlaceType__TypeI__17F790F9">
+            <End Role="Type" EntitySet="Type" />
+            <End Role="PlaceType" EntitySet="PlaceType" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -237,6 +293,11 @@
             <End Role="Pictures" EntitySet="Pictures" />
             <End Role="Event" EntitySet="Event" />
           </AssociationSet>
+          <EntitySet Name="Type" EntityType="InCityDBModel.Type" />
+          <AssociationSet Name="PlaceType" Association="InCityDBModel.PlaceType">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="Type" EntitySet="Type" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Place">
           <Key>
@@ -248,6 +309,7 @@
           <Property Name="HeaderId" Type="Int32" />
           <NavigationProperty Name="Pictures" Relationship="InCityDBModel.FK__Place__HeaderId__4BAC3F29" FromRole="Place" ToRole="Pictures" />
           <NavigationProperty Name="EventPlace" Relationship="InCityDBModel.FK__EventPlac__Place__5CD6CB2B" FromRole="Place" ToRole="EventPlace" />
+          <NavigationProperty Name="Type" Relationship="InCityDBModel.PlaceType" FromRole="Place" ToRole="Type" />
         </EntityType>
         <EntityType Name="Pictures">
           <Key>
@@ -333,6 +395,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Place" Relationship="InCityDBModel.PlaceType" FromRole="Type" ToRole="Place" />
+        </EntityType>
+        <Association Name="PlaceType">
+          <End Type="InCityDBModel.Place" Role="Place" Multiplicity="*" />
+          <End Type="InCityDBModel.Type" Role="Type" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -400,6 +474,22 @@
             </EndProperty>
             <EndProperty Name="Event">
               <ScalarProperty Name="Id" ColumnName="EventId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Type">
+            <EntityTypeMapping TypeName="InCityDBModel.Type">
+              <MappingFragment StoreEntitySet="Type">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="PlaceType" TypeName="InCityDBModel.PlaceType" StoreEntitySet="PlaceType">
+            <EndProperty Name="Type">
+              <ScalarProperty Name="Id" ColumnName="TypeId" />
+            </EndProperty>
+            <EndProperty Name="Place">
+              <ScalarProperty Name="Id" ColumnName="PlaceId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

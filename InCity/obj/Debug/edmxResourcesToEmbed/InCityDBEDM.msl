@@ -64,5 +64,21 @@
         <ScalarProperty Name="Id" ColumnName="EventId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="Type">
+      <EntityTypeMapping TypeName="InCityDBModel.Type">
+        <MappingFragment StoreEntitySet="Type">
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="PlaceType" TypeName="InCityDBModel.PlaceType" StoreEntitySet="PlaceType">
+      <EndProperty Name="Type">
+        <ScalarProperty Name="Id" ColumnName="TypeId" />
+      </EndProperty>
+      <EndProperty Name="Place">
+        <ScalarProperty Name="Id" ColumnName="PlaceId" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

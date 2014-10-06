@@ -46,6 +46,11 @@
       <End Role="Pictures" EntitySet="Pictures" />
       <End Role="Event" EntitySet="Event" />
     </AssociationSet>
+    <EntitySet Name="Type" EntityType="InCityDBModel.Type" />
+    <AssociationSet Name="PlaceType" Association="InCityDBModel.PlaceType">
+      <End Role="Place" EntitySet="Place" />
+      <End Role="Type" EntitySet="Type" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Place">
     <Key>
@@ -57,6 +62,7 @@
     <Property Name="HeaderId" Type="Int32" />
     <NavigationProperty Name="Pictures" Relationship="InCityDBModel.FK__Place__HeaderId__4BAC3F29" FromRole="Place" ToRole="Pictures" />
     <NavigationProperty Name="EventPlace" Relationship="InCityDBModel.FK__EventPlac__Place__5CD6CB2B" FromRole="Place" ToRole="EventPlace" />
+    <NavigationProperty Name="Type" Relationship="InCityDBModel.PlaceType" FromRole="Place" ToRole="Type" />
   </EntityType>
   <EntityType Name="Pictures">
     <Key>
@@ -141,5 +147,17 @@
         <PropertyRef Name="PosterId" />
       </Dependent>
     </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Type">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Place" Relationship="InCityDBModel.PlaceType" FromRole="Type" ToRole="Place" />
+  </EntityType>
+  <Association Name="PlaceType">
+    <End Type="InCityDBModel.Place" Role="Place" Multiplicity="*" />
+    <End Type="InCityDBModel.Type" Role="Type" Multiplicity="*" />
   </Association>
 </Schema>

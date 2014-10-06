@@ -31,5 +31,6 @@ namespace InCity
         public virtual DbSet<Pictures> Pictures { get; set; }
         public virtual DbSet<Tag> Tag { get; set; }
         public virtual DbSet<EventPlace> EventPlace { get; set; }
+        public virtual DbSet<Type> Type { get; set; }
     }
 }

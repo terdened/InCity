@@ -12,7 +12,7 @@
                     foreach (var place in Model.mPlaces)
                     {
                         <tr>
-                            <td width="50%" class="event-list-btn" onclick="location.href='Place/Show?pId=@place.mId'">
+                            <td width="50%" class="event-list-btn" onclick="location.href='/Place/Show?pId=@place.mId'">
                                 @place.mTitle
                             </td>
                             <td style="text-align: center;" width="50%">
@@ -24,7 +24,7 @@
                 }
             </table>
         </td>
-        <td class="event-list-btn" width="17%" onclick="location.href='Event/Show?pId=@Model.mId'">
+        <td class="event-list-btn" width="17%" onclick="location.href='/Event/Show?pId=@Model.mId'">
             <h4 style="display: inline;">
                 Подробнее
             </h4>

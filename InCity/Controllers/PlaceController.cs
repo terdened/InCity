@@ -12,21 +12,47 @@ namespace InCity.Controllers
         // GET: Place
         public ActionResult Index()
         {
-            InCityDBEntities dbEntity = new InCityDBEntities();
-            List<PlaceModel> places = new List<PlaceModel>();
-
-            foreach (var p in dbEntity.Place)
-                places.Add(new PlaceModel(p));
-
-            return View(places);
+            PlaceListViewModel model = new PlaceListViewModel();
+            return View(model);
         }
 
         public ActionResult Show(int pId)
         {
-            InCityDBEntities dbEntity = new InCityDBEntities();
-            Place pl = dbEntity.Place.First(p => p.Id == pId);
-            PlaceModel place = new PlaceModel(pl);
-            return View(place);
+            PlaceViewModel model = new PlaceViewModel(pId);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddType(String pModel, String pType)
+        {
+            PlaceListViewModel model = new System.Web.Script.Serialization.JavaScriptSerializer().
+                Deserialize<PlaceListViewModel>(pModel);
+
+            TypeModel type = new System.Web.Script.Serialization.JavaScriptSerializer().
+                Deserialize<TypeModel>(pType);
+
+            model.mChoosedTypeList.Add(type);
+            model = new PlaceListViewModel(model.mChoosedTypeList);
+            return PartialView("Index", model);
+        }
+
+        [HttpPost]
+        public ActionResult RemoveType(String pModel, String pType)
+        {
+            PlaceListViewModel model = new System.Web.Script.Serialization.JavaScriptSerializer().
+                Deserialize<PlaceListViewModel>(pModel);
+
+            TypeModel type = new System.Web.Script.Serialization.JavaScriptSerializer().
+                Deserialize<TypeModel>(pType);
+
+            model.mChoosedTypeList.Remove(model.mChoosedTypeList.First(t=>t.mId==type.mId));
+
+            if (model.mChoosedTypeList.Count > 0)
+                model = new PlaceListViewModel(model.mChoosedTypeList);
+            else
+                model = new PlaceListViewModel();
+
+            return PartialView("Index", model);
         }
     }
 }
