@@ -1,0 +1,38 @@
+﻿@model InCity.Models.EventModels
+
+@{
+    ViewBag.Title = "View";
+}
+
+<div class="jumbotron">
+    <h2 style="text-align: center; margin-top: 0px;">@Model.mTitle</h2>
+
+    <table style="font-size: 17px;">
+        <tr>
+            <td style="vertical-align: top; padding-left: 10px;" width="100%">
+                <p>
+                    <b>Дата: </b>
+                    @DateTime.Parse(Model.mStartDate).ToString("d") - @DateTime.Parse(Model.mEndDate).ToString("d")
+                    <br />
+                    <br />
+                    <b>Описание: </b>
+                    @Model.mDescription
+                    <br />
+                    <br />
+                    <b>Места: </b>
+                    @foreach(var place in Model.mPlace)
+                    {
+                        @Html.ActionLink(place.mTitle, "Show", "Place", new { pId = place.mId }, new { });
+                        if(place!= Model.mPlace.Last())
+                        { 
+                        @:| 
+                        }
+                    }
+                </p>
+            </td>
+            <td>
+                <img src="../../@Model.mPoster" style="max-width: 300px; max-height: 400px;" />
+            </td>
+        </tr>
+    </table>
+</div>

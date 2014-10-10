@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Event">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PosterId" Type="Int32" />
+    <NavigationProperty Name="Pictures" Relationship="Self.FK__Event__PosterId__2F10007B" FromRole="Event" ToRole="Pictures" />
+    <NavigationProperty Name="EventPlace" Relationship="Self.FK__EventPlac__Event__3E52440B" FromRole="Event" ToRole="EventPlace" />
+    <NavigationProperty Name="Tag" Relationship="Self.EventTag" FromRole="Event" ToRole="Tag" />
+  </EntityType>
+  <EntityType Name="Pictures">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Event" Relationship="Self.FK__Event__PosterId__2F10007B" FromRole="Pictures" ToRole="Event" />
+    <NavigationProperty Name="Place" Relationship="Self.FK__Place__HeaderId__31EC6D26" FromRole="Pictures" ToRole="Place" />
+  </EntityType>
+  <EntityType Name="Place">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="HeaderId" Type="Int32" />
+    <Property Name="Latitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Longitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Pictures" Relationship="Self.FK__Place__HeaderId__31EC6D26" FromRole="Place" ToRole="Pictures" />
+    <NavigationProperty Name="EventPlace" Relationship="Self.FK__EventPlac__Place__3D5E1FD2" FromRole="Place" ToRole="EventPlace" />
+    <NavigationProperty Name="Type" Relationship="Self.PlaceType" FromRole="Place" ToRole="Type" />
+  </EntityType>
+  <EntityType Name="Tag">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Event" Relationship="Self.EventTag" FromRole="Tag" ToRole="Event" />
+  </EntityType>
+  <EntityType Name="Type">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Place" Relationship="Self.PlaceType" FromRole="Type" ToRole="Place" />
+  </EntityType>
+  <EntityType Name="EventPlace">
+    <Key>
+      <PropertyRef Name="EventId" />
+      <PropertyRef Name="PlaceId" />
+      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="EndDate" />
+    </Key>
+    <Property Name="EventId" Type="Int32" Nullable="false" />
+    <Property Name="PlaceId" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Price" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Event" Relationship="Self.FK__EventPlac__Event__3E52440B" FromRole="EventPlace" ToRole="Event" />
+    <NavigationProperty Name="Place" Relationship="Self.FK__EventPlac__Place__3D5E1FD2" FromRole="EventPlace" ToRole="Place" />
+  </EntityType>
+  <Association Name="FK__Event__PosterId__2F10007B">
+    <End Role="Pictures" Type="Self.Pictures" Multiplicity="0..1" />
+    <End Role="Event" Type="Self.Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pictures">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="PosterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EventPlac__Event__3E52440B">
+    <End Role="Event" Type="Self.Event" Multiplicity="1" />
+    <End Role="EventPlace" Type="Self.EventPlace" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventPlace">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Place__HeaderId__31EC6D26">
+    <End Role="Pictures" Type="Self.Pictures" Multiplicity="0..1" />
+    <End Role="Place" Type="Self.Place" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pictures">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Place">
+        <PropertyRef Name="HeaderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EventPlac__Place__3D5E1FD2">
+    <End Role="Place" Type="Self.Place" Multiplicity="1" />
+    <End Role="EventPlace" Type="Self.EventPlace" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Place">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventPlace">
+        <PropertyRef Name="PlaceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EventTag">
+    <End Role="Event" Type="Self.Event" Multiplicity="*" />
+    <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
+  </Association>
+  <Association Name="PlaceType">
+    <End Role="Place" Type="Self.Place" Multiplicity="*" />
+    <End Role="Type" Type="Self.Type" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Event" EntityType="Self.Event" />
+    <EntitySet Name="Pictures" EntityType="Self.Pictures" />
+    <EntitySet Name="Place" EntityType="Self.Place" />
+    <EntitySet Name="Tag" EntityType="Self.Tag" />
+    <EntitySet Name="Type" EntityType="Self.Type" />
+    <EntitySet Name="EventPlace" EntityType="Self.EventPlace" />
+    <AssociationSet Name="FK__Event__PosterId__2F10007B" Association="Self.FK__Event__PosterId__2F10007B">
+      <End Role="Pictures" EntitySet="Pictures" />
+      <End Role="Event" EntitySet="Event" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EventPlac__Event__3E52440B" Association="Self.FK__EventPlac__Event__3E52440B">
+      <End Role="Event" EntitySet="Event" />
+      <End Role="EventPlace" EntitySet="EventPlace" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Place__HeaderId__31EC6D26" Association="Self.FK__Place__HeaderId__31EC6D26">
+      <End Role="Pictures" EntitySet="Pictures" />
+      <End Role="Place" EntitySet="Place" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EventPlac__Place__3D5E1FD2" Association="Self.FK__EventPlac__Place__3D5E1FD2">
+      <End Role="Place" EntitySet="Place" />
+      <End Role="EventPlace" EntitySet="EventPlace" />
+    </AssociationSet>
+    <AssociationSet Name="EventTag" Association="Self.EventTag">
+      <End Role="Event" EntitySet="Event" />
+      <End Role="Tag" EntitySet="Tag" />
+    </AssociationSet>
+    <AssociationSet Name="PlaceType" Association="Self.PlaceType">
+      <End Role="Place" EntitySet="Place" />
+      <End Role="Type" EntitySet="Type" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

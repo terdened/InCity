@@ -1,0 +1,44 @@
+﻿@model InCity.Models.EventsListViewModel
+
+<table class="table-condensed" width="100%">
+        @{
+        List<DateTime> datesList = new List<DateTime>();
+
+        foreach (var e in Model.mEventsList)
+        {
+            if (!datesList.Contains(DateTime.Parse(e.mDate)))
+            {
+                datesList.Add(DateTime.Parse(e.mDate));
+            }
+        }
+
+        foreach (var date in datesList)
+        {
+            ViewBag.date = date;
+            Html.RenderPartial("../Event/DateTitle");
+            foreach (var tag in Model.mTagsList)
+            {
+                List<InCity.Models.EventListItem> eventsInCurertDate = Model.mEventsList.Where(e => e.mDate == date.ToString()).ToList();
+
+                List<InCity.Models.EventListItem> eventsWithTag = eventsInCurertDate.Where(e => e.mTags.Where(t=>t.mId == tag.mId).Count() > 0).ToList();
+
+                if (eventsWithTag.Count>0)
+                {
+                    <tr>
+                        <td>
+                            @{
+                                ViewBag.tag = tag.mTitle;
+                                Html.RenderPartial("../Event/CategoryListView", eventsWithTag);
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    }
+
+    @if(Model.mEventsList.Count == 0)
+    {
+        <h4 style="padding-left: 20px">По вашему запросу не найдено ни одного события.</h4>
+    }
+</table>

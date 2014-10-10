@@ -16,13 +16,13 @@ namespace InCity.Models
 
         public DateTime getLastEventDate()
         {
-            InCityDBEntities db = new InCityDBEntities();
+            InCityDBEntities1 db = new InCityDBEntities1();
             return db.EventPlace.Max(ep => ep.EndDate);
         }
 
         public void getEvents(DateTime pStartDate, DateTime pEndDate)
         {
-            InCityDBEntities db = new InCityDBEntities();
+            InCityDBEntities1 db = new InCityDBEntities1();
             mEventsList = new List<EventListItem>();
 
             DateTime startDate = pStartDate;
@@ -100,7 +100,7 @@ namespace InCity.Models
 
         public EventsListViewModel(List<Event> pEventList, Place pPlace)
         {
-            InCityDBEntities db = new InCityDBEntities();
+            InCityDBEntities1 db = new InCityDBEntities1();
 
             mEventsList = new List<EventListItem>();
             DateTime startDate = DateTime.Today;
@@ -116,7 +116,7 @@ namespace InCity.Models
         }
         public EventsListViewModel()
         {
-            InCityDBEntities db = new InCityDBEntities();
+            InCityDBEntities1 db = new InCityDBEntities1();
 
             this.mChoosedData = DateTime.Today.ToString();
             this.mTitleDate = "all";
@@ -132,7 +132,7 @@ namespace InCity.Models
 
         public EventsListViewModel(DateTime pDate)
         {
-            InCityDBEntities db = new InCityDBEntities();
+            InCityDBEntities1 db = new InCityDBEntities1();
 
             this.mChoosedData = pDate.ToString();
             
@@ -155,7 +155,7 @@ namespace InCity.Models
 
         public EventsListViewModel(DateTime pStartDate, DateTime pEndDate)
         {
-            InCityDBEntities db = new InCityDBEntities();
+            InCityDBEntities1 db = new InCityDBEntities1();
 
             this.mChoosedData = DateTime.Today.ToString();
             this.mTitleDate = "week";
@@ -182,7 +182,7 @@ namespace InCity.Models
         {
             if (pChoosedTagsList.Count > 0)
             {
-                InCityDBEntities db = new InCityDBEntities();
+                InCityDBEntities1 db = new InCityDBEntities1();
 
                 this.mChoosedData = DateTime.Today.ToString();
                 this.mTitleDate = "all";
@@ -197,7 +197,7 @@ namespace InCity.Models
             }
             else
             {
-                InCityDBEntities db = new InCityDBEntities();
+                InCityDBEntities1 db = new InCityDBEntities1();
 
                 this.mChoosedData = DateTime.Today.ToString();
                 this.mTitleDate = "all";

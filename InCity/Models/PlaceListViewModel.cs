@@ -13,7 +13,7 @@ namespace InCity.Models
 
         public PlaceListViewModel()
         {
-            InCityDBEntities db = new InCityDBEntities();
+            InCityDBEntities1 db = new InCityDBEntities1();
 
             this.mPlaceList = new List<PlaceModel>();
 
@@ -35,7 +35,7 @@ namespace InCity.Models
 
         public PlaceListViewModel(List<TypeModel> pChoosedTypeModel)
         {
-            InCityDBEntities db = new InCityDBEntities();
+            InCityDBEntities1 db = new InCityDBEntities1();
 
             mPlaceList = new List<PlaceModel>();
             this.mChoosedTypeList = pChoosedTypeModel;

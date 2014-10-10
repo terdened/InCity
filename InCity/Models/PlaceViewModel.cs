@@ -13,7 +13,7 @@ namespace InCity.Models
 
         public PlaceViewModel(int pId)
         {
-            InCityDBEntities db = new InCityDBEntities();
+            InCityDBEntities1 db = new InCityDBEntities1();
 
             Place place = db.Place.First(p=>p.Id==pId);
 

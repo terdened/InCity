@@ -1,0 +1,34 @@
+﻿@model InCity.Models.EventListItem
+
+<table width=100% border="0" style="padding: 0px">
+    <tr>
+        <td style="text-align: center;" width="33%">
+            <b>@Model.mTitle</b>
+        </td>
+        <td width="50%">
+            <table width=100% style="padding: 0px;">
+                @{
+                    int i=0;
+                    foreach (var place in Model.mPlaces)
+                    {
+                        <tr>
+                            <td width="50%" class="event-list-btn" onclick="location.href='/Place/Show?pId=@place.mId'">
+                                @place.mTitle
+                            </td>
+                            <td style="text-align: center;" width="50%">
+                                @Model.mPrices[i]
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+            </table>
+        </td>
+        <td class="event-list-btn" width="17%" onclick="location.href='/Event/Show?pId=@Model.mId'">
+            <h4 style="display: inline;">
+                Подробнее
+            </h4>
+            <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </td>
+    </tr>
+</table>

@@ -158,35 +158,32 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="City.cs">
-      <DependentUpon>InCityDBEDM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlaceController.cs" />
     <Compile Include="Event.cs">
-      <DependentUpon>InCityDBEDM.tt</DependentUpon>
+      <DependentUpon>InCityEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="EventPlace.cs">
-      <DependentUpon>InCityDBEDM.tt</DependentUpon>
+      <DependentUpon>InCityEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="InCityDBEDM.Context.cs">
+    <Compile Include="InCityEDM.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>InCityDBEDM.Context.tt</DependentUpon>
+      <DependentUpon>InCityEDM.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="InCityDBEDM.cs">
+    <Compile Include="InCityEDM.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>InCityDBEDM.tt</DependentUpon>
+      <DependentUpon>InCityEDM.tt</DependentUpon>
     </Compile>
-    <Compile Include="InCityDBEDM.Designer.cs">
+    <Compile Include="InCityEDM.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>InCityDBEDM.edmx</DependentUpon>
+      <DependentUpon>InCityEDM.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\EventListItem.cs" />
     <Compile Include="Models\EventModels.cs" />
@@ -197,18 +194,18 @@
     <Compile Include="Models\TagModel.cs" />
     <Compile Include="Models\TypeModel.cs" />
     <Compile Include="Pictures.cs">
-      <DependentUpon>InCityDBEDM.tt</DependentUpon>
+      <DependentUpon>InCityEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Place.cs">
-      <DependentUpon>InCityDBEDM.tt</DependentUpon>
+      <DependentUpon>InCityEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Tag.cs">
-      <DependentUpon>InCityDBEDM.tt</DependentUpon>
+      <DependentUpon>InCityEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Type.cs">
-      <DependentUpon>InCityDBEDM.tt</DependentUpon>
+      <DependentUpon>InCityEDM.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +216,15 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\datepicker.css" />
+    <Content Include="Content\Img\Headers\1.jpg" />
+    <Content Include="Content\Img\Headers\2.jpg" />
+    <Content Include="Content\Img\logo.png" />
+    <Content Include="Content\Img\Posters\1.jpg" />
+    <Content Include="Content\Img\Posters\2.jpg" />
+    <Content Include="Content\Img\Posters\3.jpg" />
+    <Content Include="Content\Img\Posters\noposter.jpg" />
+    <Content Include="Content\pickmeup.css" />
+    <Content Include="Content\Swf\logo.swf" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -226,27 +232,29 @@
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="InCityDBEDM.edmx">
+    <EntityDeploy Include="InCityEDM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>InCityDBEDM.Designer.cs</LastGenOutput>
+      <LastGenOutput>InCityEDM.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="InCityDBEDM.Context.tt">
+    <Content Include="InCityEDM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>InCityDBEDM.edmx</DependentUpon>
-      <LastGenOutput>InCityDBEDM.Context.cs</LastGenOutput>
+      <DependentUpon>InCityEDM.edmx</DependentUpon>
+      <LastGenOutput>InCityEDM.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="InCityDBEDM.edmx.diagram">
-      <DependentUpon>InCityDBEDM.edmx</DependentUpon>
+    <Content Include="InCityEDM.edmx.diagram">
+      <DependentUpon>InCityEDM.edmx</DependentUpon>
     </Content>
-    <Content Include="InCityDBEDM.tt">
+    <Content Include="InCityEDM.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>InCityDBEDM.edmx</DependentUpon>
-      <LastGenOutput>InCityDBEDM.cs</LastGenOutput>
+      <DependentUpon>InCityEDM.edmx</DependentUpon>
+      <LastGenOutput>InCityEDM.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\PublishProfiles\in-city.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.pickmeup.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

@@ -23,7 +23,7 @@ namespace InCity.Models
 
         public EventListItem(Event pEvendDB, DateTime pDate, List<EventPlace> pEP)
         {
-            InCityDBEntities db = new InCityDBEntities();
+            InCityDBEntities1 db = new InCityDBEntities1();
 
             //List<EventPlace> eventPlaces = db.EventPlace.Where(ep => ep.EventId == pEvendDB.Id).ToList();
             List<EventPlace> eventPlacesInDate = pEP.Where(ep => ep.EventId == pEvendDB.Id && ep.StartDate <= pDate && ep.EndDate >= pDate).ToList();

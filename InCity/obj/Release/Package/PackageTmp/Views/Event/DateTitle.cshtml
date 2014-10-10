@@ -1,0 +1,26 @@
+﻿<tr>
+    <td style="text-align: center;">
+        <p class="h3">
+            -
+            @if (DateTime.Today == ViewBag.date)
+            {
+                @:Сегодня
+            }
+            else
+            if (DateTime.Today.AddDays(1) == ViewBag.date)
+            {
+                @:Завтра
+            }
+            else
+            if (DateTime.Today.AddDays(-1) == ViewBag.date)
+            {
+                @:Вчера
+            }
+            else
+            {
+                @:@ViewBag.date.ToString("d")
+            }
+            -
+        </p>
+    </td>
+</tr>

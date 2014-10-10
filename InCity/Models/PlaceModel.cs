@@ -11,6 +11,8 @@ namespace InCity.Models
         public string mTitle;
         public string mAddress;
         public string mHeader;
+        public string mLatitude;
+        public string mLongitude;
 
         public PlaceModel(Place pDBPlace)
         {
@@ -22,20 +24,27 @@ namespace InCity.Models
                 mHeader = pDBPlace.Pictures.Path;
             else
                 mHeader = "";
+
+            this.mLatitude = pDBPlace.Latitude;
+            this.mLongitude = pDBPlace.Longitude;
         }
 
         public PlaceModel(int pId)
         {
-            InCityDBEntities db = new InCityDBEntities();
+            InCityDBEntities1 db = new InCityDBEntities1();
             Place place = db.Place.First(p => p.Id == pId);
             this.mId = place.Id;
             this.mTitle = place.Title;
             this.mAddress = place.Address;
 
             if (place.HeaderId != null)
-                mHeader = place.Pictures.Path;
+                this.mHeader = place.Pictures.Path;
             else
-                mHeader = "";
+                this.mHeader = "";
+
+            this.mLatitude = place.Latitude;
+            this.mLongitude = place.Longitude;
+
         }
 
         public PlaceModel(String pAddress)

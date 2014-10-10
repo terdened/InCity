@@ -24,6 +24,8 @@ namespace InCity
         public string Title { get; set; }
         public string Address { get; set; }
         public Nullable<int> HeaderId { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
     
         public virtual Pictures Pictures { get; set; }
         public virtual ICollection<EventPlace> EventPlace { get; set; }

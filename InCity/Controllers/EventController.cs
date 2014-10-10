@@ -18,7 +18,7 @@ namespace InCity.Controllers
 
         public ActionResult Show(int pId)
         {
-            InCityDBEntities db = new InCityDBEntities();
+            InCityDBEntities1 db = new InCityDBEntities1();
 
             Event eventDB = db.Event.First(e=>e.Id == pId);
             EventModels model = new EventModels(eventDB);
