@@ -9,14 +9,10 @@
     <Property Name="Description" Type="ntext" />
     <Property Name="PosterId" Type="int" />
   </EntityType>
-  <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "in-city_db.dbo.EventPlace" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
   <EntityType Name="EventPlace">
     <Key>
       <PropertyRef Name="EventId" />
       <PropertyRef Name="PlaceId" />
-      <PropertyRef Name="StartDate" />
-      <PropertyRef Name="EndDate" />
     </Key>
     <Property Name="EventId" Type="int" Nullable="false" />
     <Property Name="PlaceId" Type="int" Nullable="false" />
@@ -24,8 +20,6 @@
     <Property Name="EndDate" Type="datetime" Nullable="false" />
     <Property Name="Price" Type="ntext" />
   </EntityType>
-  <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "in-city_db.dbo.EventTag" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
   <EntityType Name="EventTag">
     <Key>
       <PropertyRef Name="EventId" />
@@ -33,6 +27,7 @@
     </Key>
     <Property Name="EventId" Type="int" Nullable="false" />
     <Property Name="TagId" Type="int" Nullable="false" />
+    <Property Name="data" Type="nchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="Pictures">
     <Key>
@@ -52,8 +47,6 @@
     <Property Name="Latitude" Type="ntext" Nullable="false" />
     <Property Name="Longitude" Type="ntext" Nullable="false" />
   </EntityType>
-  <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "in-city_db.dbo.PlaceType" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
   <EntityType Name="PlaceType">
     <Key>
       <PropertyRef Name="PlaceId" />
@@ -88,7 +81,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__EventPlac__Event__3E52440B">
+  <Association Name="FK__EventPlac__Event__45F365D3">
     <End Role="Event" Type="Self.Event" Multiplicity="1" />
     <End Role="EventPlace" Type="Self.EventPlace" Multiplicity="*" />
     <ReferentialConstraint>
@@ -100,7 +93,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__EventPlac__Place__3D5E1FD2">
+  <Association Name="FK__EventPlac__Place__44FF419A">
     <End Role="Place" Type="Self.Place" Multiplicity="1" />
     <End Role="EventPlace" Type="Self.EventPlace" Multiplicity="*" />
     <ReferentialConstraint>
@@ -112,7 +105,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__EventTag__EventI__3B75D760">
+  <Association Name="FK__EventTag__EventI__4222D4EF">
     <End Role="Event" Type="Self.Event" Multiplicity="1" />
     <End Role="EventTag" Type="Self.EventTag" Multiplicity="*" />
     <ReferentialConstraint>
@@ -124,7 +117,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__EventTag__TagId__3A81B327">
+  <Association Name="FK__EventTag__TagId__412EB0B6">
     <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
     <End Role="EventTag" Type="Self.EventTag" Multiplicity="*" />
     <ReferentialConstraint>
@@ -148,7 +141,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PlaceType__Place__37A5467C">
+  <Association Name="FK__PlaceType__Place__48CFD27E">
     <End Role="Place" Type="Self.Place" Multiplicity="1" />
     <End Role="PlaceType" Type="Self.PlaceType" Multiplicity="*" />
     <ReferentialConstraint>
@@ -160,7 +153,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PlaceType__TypeI__38996AB5">
+  <Association Name="FK__PlaceType__TypeI__49C3F6B7">
     <End Role="Type" Type="Self.Type" Multiplicity="1" />
     <End Role="PlaceType" Type="Self.PlaceType" Multiplicity="*" />
     <ReferentialConstraint>
@@ -174,48 +167,30 @@
   </Association>
   <EntityContainer Name="Хранилище ModelContainer">
     <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventPlace" EntityType="Self.EventPlace" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventTag" EntityType="Self.EventTag" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PlaceType" EntityType="Self.PlaceType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="EventPlace" EntityType="Self.EventPlace" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [EventPlace].[EventId] AS [EventId], 
-    [EventPlace].[PlaceId] AS [PlaceId], 
-    [EventPlace].[StartDate] AS [StartDate], 
-    [EventPlace].[EndDate] AS [EndDate], 
-    [EventPlace].[Price] AS [Price]
-    FROM [dbo].[EventPlace] AS [EventPlace]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="EventTag" EntityType="Self.EventTag" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [EventTag].[EventId] AS [EventId], 
-    [EventTag].[TagId] AS [TagId]
-    FROM [dbo].[EventTag] AS [EventTag]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="PlaceType" EntityType="Self.PlaceType" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [PlaceType].[PlaceId] AS [PlaceId], 
-    [PlaceType].[TypeId] AS [TypeId]
-    FROM [dbo].[PlaceType] AS [PlaceType]</DefiningQuery>
-    </EntitySet>
     <AssociationSet Name="FK__Event__PosterId__2F10007B" Association="Self.FK__Event__PosterId__2F10007B">
       <End Role="Pictures" EntitySet="Pictures" />
       <End Role="Event" EntitySet="Event" />
     </AssociationSet>
-    <AssociationSet Name="FK__EventPlac__Event__3E52440B" Association="Self.FK__EventPlac__Event__3E52440B">
+    <AssociationSet Name="FK__EventPlac__Event__45F365D3" Association="Self.FK__EventPlac__Event__45F365D3">
       <End Role="Event" EntitySet="Event" />
       <End Role="EventPlace" EntitySet="EventPlace" />
     </AssociationSet>
-    <AssociationSet Name="FK__EventPlac__Place__3D5E1FD2" Association="Self.FK__EventPlac__Place__3D5E1FD2">
+    <AssociationSet Name="FK__EventPlac__Place__44FF419A" Association="Self.FK__EventPlac__Place__44FF419A">
       <End Role="Place" EntitySet="Place" />
       <End Role="EventPlace" EntitySet="EventPlace" />
     </AssociationSet>
-    <AssociationSet Name="FK__EventTag__EventI__3B75D760" Association="Self.FK__EventTag__EventI__3B75D760">
+    <AssociationSet Name="FK__EventTag__EventI__4222D4EF" Association="Self.FK__EventTag__EventI__4222D4EF">
       <End Role="Event" EntitySet="Event" />
       <End Role="EventTag" EntitySet="EventTag" />
     </AssociationSet>
-    <AssociationSet Name="FK__EventTag__TagId__3A81B327" Association="Self.FK__EventTag__TagId__3A81B327">
+    <AssociationSet Name="FK__EventTag__TagId__412EB0B6" Association="Self.FK__EventTag__TagId__412EB0B6">
       <End Role="Tag" EntitySet="Tag" />
       <End Role="EventTag" EntitySet="EventTag" />
     </AssociationSet>
@@ -223,11 +198,11 @@
       <End Role="Pictures" EntitySet="Pictures" />
       <End Role="Place" EntitySet="Place" />
     </AssociationSet>
-    <AssociationSet Name="FK__PlaceType__Place__37A5467C" Association="Self.FK__PlaceType__Place__37A5467C">
+    <AssociationSet Name="FK__PlaceType__Place__48CFD27E" Association="Self.FK__PlaceType__Place__48CFD27E">
       <End Role="Place" EntitySet="Place" />
       <End Role="PlaceType" EntitySet="PlaceType" />
     </AssociationSet>
-    <AssociationSet Name="FK__PlaceType__TypeI__38996AB5" Association="Self.FK__PlaceType__TypeI__38996AB5">
+    <AssociationSet Name="FK__PlaceType__TypeI__49C3F6B7" Association="Self.FK__PlaceType__TypeI__49C3F6B7">
       <End Role="Type" EntitySet="Type" />
       <End Role="PlaceType" EntitySet="PlaceType" />
     </AssociationSet>

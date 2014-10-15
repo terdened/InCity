@@ -58,14 +58,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="EventTag" TypeName="Model.EventTag" StoreEntitySet="EventTag">
-      <EndProperty Name="Event">
-        <ScalarProperty Name="Id" ColumnName="EventId" />
-      </EndProperty>
-      <EndProperty Name="Tag">
-        <ScalarProperty Name="Id" ColumnName="TagId" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="PlaceType" TypeName="Model.PlaceType" StoreEntitySet="PlaceType">
       <EndProperty Name="Place">
         <ScalarProperty Name="Id" ColumnName="PlaceId" />
@@ -74,5 +66,14 @@
         <ScalarProperty Name="Id" ColumnName="TypeId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="EventTag">
+      <EntityTypeMapping TypeName="Model.EventTag">
+        <MappingFragment StoreEntitySet="EventTag">
+          <ScalarProperty Name="data" ColumnName="data" />
+          <ScalarProperty Name="TagId" ColumnName="TagId" />
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -1,0 +1,28 @@
+﻿@model InCity.Models.CreateEventViewModel
+
+<table width="100%">
+    <tr>
+        <td>
+            Теги:
+        </td>
+    </tr>
+    @for (int i = 0; i < Model.mEventTag.Count; i++)
+    {
+        <tr>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <td>
+                <div class="col-md-2">
+                    @{
+                        List<SelectListItem> tagList = new List<SelectListItem>();
+                        foreach (var tag in Model.mTagsList)
+                        {
+                            tagList.Add(new SelectListItem() { Text = tag.mTitle, Value = tag.mId.ToString() });
+                        }
+                        @Html.DropDownListFor(model => model.mEventTag[i].mId, tagList);
+                    }
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+

@@ -1,0 +1,88 @@
+﻿@model InCity.Models.CreatePlaceViewModel
+
+@{
+    ViewBag.Title = "Новое место";
+}
+
+<script src="../../Scripts/jquery-1.10.2.js"></script>
+<script src="../../Scripts/bootstrap-datepicker.js"></script>
+<link href="../../Content/datepicker.css" rel="stylesheet" type="text/css" />
+
+
+<h2>Новое событие</h2>
+
+@using (Html.BeginForm("NewPlace", "ContentFiller", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div id="result">
+        @Html.AntiForgeryToken()
+
+        <div>
+            @Html.HiddenFor(model => model.mId)
+        </div>
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="control-label col-md-2"><b>Заголовок</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.mTitle)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="control-label col-md-2"><b>Адрес</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.mAddress)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="control-label col-md-2"><b>Широта</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.mLatitude)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="control-label col-md-2"><b>Долгота</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.mLongitude)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="control-label col-md-2"><b>Постер</b></div>
+                <div class="col-md-10">
+                    @if (Model.mHeaderId == 0)
+                    {
+                        <input type="file" name="file" id="file" style="width: 100%;" />
+                        <input type="submit" value="Загрузить" formaction="@Url.Action("NewPlaceDownloadImage")" class="submit btn btn-default" />
+                    }
+                    else
+                    {
+                        InCityDBEntities1 db = new InCityDBEntities1();
+                        string imagePath = db.Pictures.First(p => p.Id == Model.mHeaderId).Path;
+                        @Html.HiddenFor(model => model.mHeaderId)
+                        @:<img src="@imagePath" />
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @{Html.RenderPartial("TypesList", Model);}
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Добавить тег" formaction="@Url.Action("NewPlaceAddType")" class="btn btn-default" />
+                    <input type="submit" value="Удалить тег" formaction="@Url.Action("NewPlaceRemoveType")" class="btn btn-default" />
+                    <input type="submit" value="Создать" formaction="@Url.Action("NewPlaceSave")"  class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Назад к панели администратора", "Index", new { pPass = "Amaterassu11071959" })
+</div>

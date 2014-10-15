@@ -158,6 +158,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ContentFillerController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlaceController.cs" />
@@ -165,6 +166,9 @@
       <DependentUpon>InCityEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="EventPlace.cs">
+      <DependentUpon>InCityEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EventTag.cs">
       <DependentUpon>InCityEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -185,8 +189,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InCityEDM.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\CreateEventViewModel.cs" />
+    <Compile Include="Models\CreatePlaceViewModel.cs" />
     <Compile Include="Models\EventListItem.cs" />
     <Compile Include="Models\EventModels.cs" />
+    <Compile Include="Models\EventPlaceModel.cs" />
     <Compile Include="Models\EventsListViewModel.cs" />
     <Compile Include="Models\PlaceListViewModel.cs" />
     <Compile Include="Models\PlaceModel.cs" />
@@ -288,6 +295,14 @@
     <Content Include="Views\Event\EventListItem.cshtml" />
     <Content Include="Views\Event\CategoryListView.cshtml" />
     <Content Include="Views\Event\Show.cshtml" />
+    <Content Include="Views\ContentFiller\Index.cshtml" />
+    <Content Include="Views\ContentFiller\NewEvent.cshtml" />
+    <Content Include="Views\ContentFiller\EventPlacesList.cshtml" />
+    <Content Include="Views\ContentFiller\EventPlaceListItem.cshtml" />
+    <Content Include="Views\ContentFiller\TagsList.cshtml" />
+    <Content Include="Views\ContentFiller\NewPlace.cshtml" />
+    <Content Include="Views\ContentFiller\TypesList.cshtml" />
+    <Content Include="Views\ContentFiller\EventsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

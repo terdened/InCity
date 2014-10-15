@@ -17,7 +17,15 @@ namespace InCity.Models
         public DateTime getLastEventDate()
         {
             InCityDBEntities1 db = new InCityDBEntities1();
-            return db.EventPlace.Max(ep => ep.EndDate);
+
+            try
+            {
+                return db.EventPlace.Max(ep => ep.EndDate);
+            }
+            catch
+            {
+                return DateTime.Today;
+            }
         }
 
         public void getEvents(DateTime pStartDate, DateTime pEndDate)
@@ -54,7 +62,7 @@ namespace InCity.Models
 
                     foreach (var tag in mChoosedTagsList)
                         foreach (var e in eventsInCurrentDate)
-                            if (e.Tag.Where(t => t.Id == tag.mId).Count() > 0)
+                            if (e.EventTag.Where(t => t.TagId == tag.mId).Count() > 0)
                                 filteredEvents.Add(e);
 
                  
@@ -97,14 +105,23 @@ namespace InCity.Models
             }
         }
 
-
         public EventsListViewModel(List<Event> pEventList, Place pPlace)
         {
             InCityDBEntities1 db = new InCityDBEntities1();
 
             mEventsList = new List<EventListItem>();
             DateTime startDate = DateTime.Today;
-            DateTime endDate = db.EventPlace.Where(ep=>ep.PlaceId==pPlace.Id).Max(ep=>ep.EndDate);
+            DateTime endDate = DateTime.Today;
+
+            try 
+            { 
+                endDate = db.EventPlace.Where(ep => ep.PlaceId == pPlace.Id).Max(ep => ep.EndDate);
+            }
+            catch
+            {
+
+            }
+            
 
             getEvents(pEventList, pPlace, startDate, endDate);
 

@@ -21,8 +21,23 @@ namespace InCity.Models
             this.mTitle = pDBEvent.Title;
             this.mDescription = pDBEvent.Description;
 
-            this.mStartDate = pDBEvent.EventPlace.Min(ep => ep.StartDate).ToString();
-            this.mEndDate = pDBEvent.EventPlace.Max(ep => ep.EndDate).ToString();
+            try
+            {
+                this.mStartDate = pDBEvent.EventPlace.Min(ep => ep.StartDate).ToString();
+            }
+            catch
+            {
+                this.mStartDate = DateTime.Today.ToString();
+            }
+
+            try
+            {
+                this.mEndDate = pDBEvent.EventPlace.Max(ep => ep.EndDate).ToString();
+            }
+            catch
+            {
+                this.mEndDate = DateTime.Today.ToString();
+            }
 
             this.mPlace = new List<PlaceModel>();
 

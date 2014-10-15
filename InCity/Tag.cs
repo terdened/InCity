@@ -16,12 +16,12 @@ namespace InCity
     {
         public Tag()
         {
-            this.Event = new HashSet<Event>();
+            this.EventTag = new HashSet<EventTag>();
         }
     
         public int Id { get; set; }
         public string Title { get; set; }
     
-        public virtual ICollection<Event> Event { get; set; }
+        public virtual ICollection<EventTag> EventTag { get; set; }
     }
 }

@@ -10,7 +10,7 @@
     <Property Name="PosterId" Type="Int32" />
     <NavigationProperty Name="Pictures" Relationship="Self.FK__Event__PosterId__2F10007B" FromRole="Event" ToRole="Pictures" />
     <NavigationProperty Name="EventPlace" Relationship="Self.FK__EventPlac__Event__3E52440B" FromRole="Event" ToRole="EventPlace" />
-    <NavigationProperty Name="Tag" Relationship="Self.EventTag" FromRole="Event" ToRole="Tag" />
+    <NavigationProperty Name="EventTag" Relationship="Model.FK__EventTag__EventI__3B75D760" FromRole="Event" ToRole="EventTag" />
   </EntityType>
   <EntityType Name="Pictures">
     <Key>
@@ -41,7 +41,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" />
     <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Event" Relationship="Self.EventTag" FromRole="Tag" ToRole="Event" />
+    <NavigationProperty Name="EventTag" Relationship="Model.FK__EventTag__TagId__3A81B327" FromRole="Tag" ToRole="EventTag" />
   </EntityType>
   <EntityType Name="Type">
     <Key>
@@ -55,8 +55,6 @@
     <Key>
       <PropertyRef Name="EventId" />
       <PropertyRef Name="PlaceId" />
-      <PropertyRef Name="StartDate" />
-      <PropertyRef Name="EndDate" />
     </Key>
     <Property Name="EventId" Type="Int32" Nullable="false" />
     <Property Name="PlaceId" Type="Int32" Nullable="false" />
@@ -114,10 +112,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="EventTag">
-    <End Role="Event" Type="Self.Event" Multiplicity="*" />
-    <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
-  </Association>
   <Association Name="PlaceType">
     <End Role="Place" Type="Self.Place" Multiplicity="*" />
     <End Role="Type" Type="Self.Type" Multiplicity="*" />
@@ -145,13 +139,53 @@
       <End Role="Place" EntitySet="Place" />
       <End Role="EventPlace" EntitySet="EventPlace" />
     </AssociationSet>
-    <AssociationSet Name="EventTag" Association="Self.EventTag">
-      <End Role="Event" EntitySet="Event" />
-      <End Role="Tag" EntitySet="Tag" />
-    </AssociationSet>
     <AssociationSet Name="PlaceType" Association="Self.PlaceType">
       <End Role="Place" EntitySet="Place" />
       <End Role="Type" EntitySet="Type" />
     </AssociationSet>
+    <EntitySet Name="EventTag" EntityType="Model.EventTag" />
+    <AssociationSet Name="FK__EventTag__EventI__3B75D760" Association="Model.FK__EventTag__EventI__3B75D760">
+      <End Role="Event" EntitySet="Event" />
+      <End Role="EventTag" EntitySet="EventTag" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EventTag__TagId__3A81B327" Association="Model.FK__EventTag__TagId__3A81B327">
+      <End Role="Tag" EntitySet="Tag" />
+      <End Role="EventTag" EntitySet="EventTag" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="EventTag">
+    <Key>
+      <PropertyRef Name="EventId" />
+      <PropertyRef Name="TagId" />
+    </Key>
+    <Property Name="EventId" Type="Int32" Nullable="false" />
+    <Property Name="TagId" Type="Int32" Nullable="false" />
+    <Property Name="data" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Event" Relationship="Model.FK__EventTag__EventI__3B75D760" FromRole="EventTag" ToRole="Event" />
+    <NavigationProperty Name="Tag" Relationship="Model.FK__EventTag__TagId__3A81B327" FromRole="EventTag" ToRole="Tag" />
+  </EntityType>
+  <Association Name="FK__EventTag__EventI__3B75D760">
+    <End Type="Model.Event" Role="Event" Multiplicity="1" />
+    <End Type="Model.EventTag" Role="EventTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventTag">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EventTag__TagId__3A81B327">
+    <End Type="Model.Tag" Role="Tag" Multiplicity="1" />
+    <End Type="Model.EventTag" Role="EventTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tag">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventTag">
+        <PropertyRef Name="TagId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

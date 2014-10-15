@@ -41,8 +41,11 @@ namespace InCity.Models
 
             mTags = new List<TagModel>();
 
-            foreach (var tag in pEvendDB.Tag)
-                mTags.Add(new TagModel(tag));
+            foreach (var tag in pEvendDB.EventTag)
+            {
+                mTags.Add(new TagModel(db.Tag.First(t=>t.Id==tag.TagId)));
+            }
+                
 
             this.mDescription = pEvendDB.Description;
             this.mId = pEvendDB.Id;

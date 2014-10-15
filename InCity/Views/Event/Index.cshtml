@@ -97,16 +97,10 @@
 
                         if (Model.mChoosedTagsList.Where(t => t.mId == tag.mId).Count()>0)
                         {        
-                            @*@Ajax.ActionLink(@tag.mTitle, "RemoveTag", "Event", new { pModel = modelJSON, pTag = tagJSON }, new AjaxOptions { HttpMethod = "POST" })
-                            @Html.ActionLink(@tag.mTitle, "RemoveTag", "Event", new { pModel = modelJSON, pTag = tagJSON }, new { @class = "col-md-6 btn btn-primary",
-                            style = "margin-right: 10px; margin-bottom: 10px; width:" + @length + "px; font-size: 25px"})*@
                             @:<a href="#" class="col-md-@length btn tag-selected-btn" onclick="removeTag('@tagJSON')">@tag.mTitle</a>
                         }
                         else
                         {
-                            @*@Ajax.ActionLink(@tag.mTitle, "AddTag", "Event", new { pModel = modelJSON, pTag = tagJSON }, new AjaxOptions { HttpMethod = "POST" })
-                            @Html.ActionLink(@tag.mTitle, "AddTag", "Event", new { pModel = modelJSON, pTag = tagJSON }, new { HttpMethod = "POST",@class = "col-md-6 btn btn-default",
-                            style = "margin-right: 10px; margin-bottom: 10px; width:" + @length + "px; font-size: 25px"})*@
                             @:<a href="#" class="col-md-@length btn tag-btn" onclick="addTag('@tagJSON')">@tag.mTitle</a>
                         }
                 }

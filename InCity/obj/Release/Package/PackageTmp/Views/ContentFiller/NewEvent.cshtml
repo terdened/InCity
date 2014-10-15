@@ -1,0 +1,81 @@
+﻿@model InCity.Models.CreateEventViewModel
+
+@{
+    ViewBag.Title = "Новое событие";
+}
+
+<script src="../../Scripts/jquery-1.10.2.js"></script>
+<script src="../../Scripts/bootstrap-datepicker.js"></script>
+<link href="../../Content/datepicker.css" rel="stylesheet" type="text/css" />
+
+
+<h2>Новое событие</h2>
+
+@using (Html.BeginForm("NewEvent", "ContentFiller", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div id="result">
+        @Html.AntiForgeryToken()
+
+        <div>
+            @Html.HiddenFor(model => model.mId)
+        </div>
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="control-label col-md-2"><b>Заголовок</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.mTitle)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="control-label col-md-2"><b>Описание</b></div>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.mDescription)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="control-label col-md-2"><b>Постер</b></div>
+                <div class="col-md-10">
+                    @if (Model.mPosterId == 0)
+                    {
+                        <input type="file" name="file" id="file" style="width: 100%;" />
+                        <input type="submit" value="Загрузить" formaction="@Url.Action("NewEventDownloadImage")" class="submit btn btn-default" />
+                    }
+                    else
+                    {
+                        InCityDBEntities1 db = new InCityDBEntities1();
+                        string imagePath = db.Pictures.First(p => p.Id == Model.mPosterId).Path;
+                        @Html.HiddenFor(model => model.mPosterId)
+                        @:<img src="@imagePath" />
+                    }
+                    
+                </div>
+            </div>
+
+            <div class="form-group">
+                @{Html.RenderPartial("EventPlacesList", Model);}
+            </div>
+
+            <div class="form-group">
+                @{Html.RenderPartial("TagsList", Model);}
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Добавить место" formaction="@Url.Action("NewEventAddPlace")" class="btn btn-default" />
+                    <input type="submit" value="Удалить место" formaction="@Url.Action("NewEventRemovePlace")" class="btn btn-default" />
+                    <input type="submit" value="Добавить тег" formaction="@Url.Action("NewEventAddTag")" class="btn btn-default" />
+                    <input type="submit" value="Удалить тег" formaction="@Url.Action("NewEventRemoveTag")" class="btn btn-default" />
+                    <input type="submit" value="Создать" formaction="@Url.Action("NewEventSave")"  class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Назад к панели администратора", "Index", new { pPass = "Amaterassu11071959" })
+</div>

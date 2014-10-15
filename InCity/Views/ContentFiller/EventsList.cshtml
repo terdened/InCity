@@ -1,0 +1,27 @@
+﻿@model IEnumerable<InCity.Models.EventModels>
+
+@{
+    ViewBag.Title = "Список событий";
+}
+
+<h2>Список событий</h2>
+
+<p>
+    @Html.ActionLink("Создать", "NewEvent", new { pPass = "Amaterassu11071959" })
+</p>
+<table class="table">
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @item.mTitle
+            [ 
+            @Html.ActionLink("Редактировать", "EditEvent", new { pId = item.mId, pPass = "Amaterassu11071959" }) |
+            @Html.ActionLink("Просмотр", "Show", "Event", new { pId = item.mId }, null) |
+            @Html.ActionLink("Удалить", "RemoveEvent", new { pId = item.mId, pPass = "Amaterassu11071959" })
+             ]
+        </td>
+    </tr>
+}
+
+</table>

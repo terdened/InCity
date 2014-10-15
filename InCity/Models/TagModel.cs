@@ -8,8 +8,8 @@ namespace InCity.Models
 {
     public class TagModel
     {
-        public int mId;
-        public string mTitle;
+        public int mId { get; set; }
+        public string mTitle { get; set; }
 
         public TagModel(Tag pTag)
         {

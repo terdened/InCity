@@ -17,7 +17,7 @@ namespace InCity
         public Event()
         {
             this.EventPlace = new HashSet<EventPlace>();
-            this.Tag = new HashSet<Tag>();
+            this.EventTag = new HashSet<EventTag>();
         }
     
         public int Id { get; set; }
@@ -27,6 +27,6 @@ namespace InCity
     
         public virtual Pictures Pictures { get; set; }
         public virtual ICollection<EventPlace> EventPlace { get; set; }
-        public virtual ICollection<Tag> Tag { get; set; }
+        public virtual ICollection<EventTag> EventTag { get; set; }
     }
 }
