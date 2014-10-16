@@ -65,6 +65,7 @@ namespace InCity.Controllers
             return NewEvent(pModel);
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult NewPlaceAddType(CreatePlaceViewModel pModel)
         {
             pModel.mPlaceType.Add(new TypeModel());
@@ -199,6 +200,43 @@ namespace InCity.Controllers
             }
 
             return View(model);
+        }
+
+        public ActionResult PlacesList(string pPass)
+        {
+            if (mPass != pPass)
+                return RedirectToAction("Index", "Home");
+
+            InCityDBEntities1 db = new InCityDBEntities1();
+            List<Place> places = db.Place.ToList();
+            List<PlaceModel> model = new List<PlaceModel>();
+
+            foreach (var p in places)
+            {
+                model.Add(new PlaceModel(p));
+            }
+
+            return View(model);
+        }
+
+        public ActionResult EditPlace(int pId, string pPass)
+        {
+            if (mPass != pPass)
+                return RedirectToAction("Index", "Home");
+
+            CreatePlaceViewModel model = new CreatePlaceViewModel(pId);
+            return NewPlace(model);
+        }
+
+        public ActionResult RemovePlace(int pId, string pPass)
+        {
+            if (mPass != pPass)
+                return RedirectToAction("Index", "Home");
+
+            CreatePlaceViewModel model = new CreatePlaceViewModel(pId);
+            model.RemoveFromDB();
+
+            return RedirectToAction("PlacesList", new { pPass = mPass });
         }
     }
 }

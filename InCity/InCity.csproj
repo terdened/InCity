@@ -225,6 +225,7 @@
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\Img\Headers\1.jpg" />
     <Content Include="Content\Img\Headers\2.jpg" />
+    <Content Include="Content\Img\Headers\notitle.jpg" />
     <Content Include="Content\Img\logo.png" />
     <Content Include="Content\Img\Posters\1.jpg" />
     <Content Include="Content\Img\Posters\2.jpg" />
@@ -303,6 +304,7 @@
     <Content Include="Views\ContentFiller\NewPlace.cshtml" />
     <Content Include="Views\ContentFiller\TypesList.cshtml" />
     <Content Include="Views\ContentFiller\EventsList.cshtml" />
+    <Content Include="Views\ContentFiller\PlacesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

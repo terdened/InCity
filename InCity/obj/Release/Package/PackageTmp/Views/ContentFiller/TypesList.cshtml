@@ -13,10 +13,18 @@
             <td>
                 <div class="col-md-2">
                     @{
+                        
                         List<SelectListItem> typesList = new List<SelectListItem>();
                         foreach (var type in Model.mTypesList)
                         {
-                            typesList.Add(new SelectListItem() { Text = type.mTitle, Value = type.mId.ToString() });
+                            if (Model.mPlaceType[i].mId == type.mId)
+                            {
+                                typesList.Add(new SelectListItem() { Text = type.mTitle, Value = type.mId.ToString(), Selected = true });
+                            }
+                            else
+                            {
+                                typesList.Add(new SelectListItem() { Text = type.mTitle, Value = type.mId.ToString(), Selected = false });
+                            }
                         }
                         @Html.DropDownListFor(model => model.mPlaceType[i].mId, typesList);
                     }

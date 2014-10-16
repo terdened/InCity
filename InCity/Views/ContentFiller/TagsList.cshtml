@@ -16,7 +16,15 @@
                         List<SelectListItem> tagList = new List<SelectListItem>();
                         foreach (var tag in Model.mTagsList)
                         {
-                            tagList.Add(new SelectListItem() { Text = tag.mTitle, Value = tag.mId.ToString() });
+                            if (Model.mEventTag[i].mId == tag.mId)
+                            {
+                                tagList.Add(new SelectListItem() { Text = tag.mTitle, Value = tag.mId.ToString(), Selected = true });
+                            }
+                            else
+                            {
+                                tagList.Add(new SelectListItem() { Text = tag.mTitle, Value = tag.mId.ToString(), Selected = false });
+                            }
+                                
                         }
                         @Html.DropDownListFor(model => model.mEventTag[i].mId, tagList);
                     }

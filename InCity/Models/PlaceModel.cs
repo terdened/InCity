@@ -7,12 +7,12 @@ namespace InCity.Models
 {
     public class PlaceModel
     {
-        public int mId;
-        public string mTitle;
-        public string mAddress;
-        public string mHeader;
-        public string mLatitude;
-        public string mLongitude;
+        public int mId { get; set; }
+        public string mTitle { get; set; }
+        public string mAddress { get; set; }
+        public string mHeader { get; set; }
+        public string mLatitude { get; set; }
+        public string mLongitude { get; set; }
 
         public PlaceModel(Place pDBPlace)
         {
@@ -23,7 +23,7 @@ namespace InCity.Models
             if (pDBPlace.HeaderId != null)
                 mHeader = pDBPlace.Pictures.Path;
             else
-                mHeader = "";
+                mHeader = "Content/Img/Headers/notitle.jpg";
 
             this.mLatitude = pDBPlace.Latitude;
             this.mLongitude = pDBPlace.Longitude;
@@ -40,7 +40,7 @@ namespace InCity.Models
             if (place.HeaderId != null)
                 this.mHeader = place.Pictures.Path;
             else
-                this.mHeader = "";
+                this.mHeader = "Content/Img/Headers/notitle.jpg";
 
             this.mLatitude = place.Latitude;
             this.mLongitude = place.Longitude;

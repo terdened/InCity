@@ -28,8 +28,8 @@ namespace InCity.Models
             {
                 this.mId = 1;
             }
-            this.mTitle = "Введите заголовок";
-            this.mDescription = "Введите описание";
+            this.mTitle = "";
+            this.mDescription = "";
             this.mPosterId = 0;
 
             this.mEventPlaces = new List<EventPlaceModel>();
@@ -55,7 +55,11 @@ namespace InCity.Models
             this.mId = eventInDB.Id;
             this.mTitle = eventInDB.Title;
             this.mDescription = eventInDB.Description;
-            this.mPosterId = (int) eventInDB.PosterId;
+
+            if (eventInDB.PosterId!= null)
+                this.mPosterId = (int) eventInDB.PosterId;
+            else
+                this.mPosterId = 0;
 
             List<EventPlace> eventPlaces = db.EventPlace.Where(ep => ep.EventId == this.mId).ToList();
             this.mEventPlaces = new List<EventPlaceModel>();
@@ -121,7 +125,10 @@ namespace InCity.Models
             eventDB.Id = this.mId;
             eventDB.Title = this.mTitle;
             eventDB.Description = this.mDescription;
-            eventDB.PosterId = this.mPosterId;
+            if (this.mPosterId != 0)
+                eventDB.PosterId = this.mPosterId;
+            else
+                eventDB.PosterId = null;
 
             foreach(var t in this.mEventTag)
             {
