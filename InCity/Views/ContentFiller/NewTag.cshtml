@@ -1,0 +1,36 @@
+﻿@model InCity.Models.TagModel
+
+@{
+    ViewBag.Title = "Новый тег";
+}
+
+<h2>Новый тег</h2>
+
+@using (Html.BeginForm("NewTagSave", "ContentFiller", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.HiddenFor(model => model.mId)
+
+        <div class="row">
+            <div class="col-md-1">
+                <h3>Тег</h3>
+            </div>
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.mTitle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Назад к панели администратора", "Index", new { pPass = "Amaterassu11071959" })
+</div>

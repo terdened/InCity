@@ -238,5 +238,105 @@ namespace InCity.Controllers
 
             return RedirectToAction("PlacesList", new { pPass = mPass });
         }
+
+        public ActionResult TagsListView(string pPass)
+        {
+            if (mPass != pPass)
+                return RedirectToAction("Index", "Home");
+
+
+            InCityDBEntities1 db = new InCityDBEntities1();
+            List<TagModel> model = new List<TagModel>();
+            List<Tag> tags = db.Tag.ToList();
+
+            foreach (var tag in tags)
+                model.Add(new TagModel(tag));
+
+            return View(model);
+        }
+
+        public ActionResult NewTag(string pPass, int pId = 0)
+        {
+            if (mPass != pPass)
+                return RedirectToAction("Index", "Home");
+
+            InCityDBEntities1 db = new InCityDBEntities1();
+            TagModel model;
+
+            if(pId != 0)
+                model = new TagModel(db.Tag.First(t=>t.Id == pId));
+            else
+                model = new TagModel();
+
+            return View(model);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult NewTagSave(TagModel pModel)
+        {
+            pModel.SaveInDB();
+            return RedirectToAction("TagsListView", new { pPass = "Amaterassu11071959" });
+        }
+
+        public ActionResult RemoveTag(int pId, string pPass)
+        {
+            if (mPass != pPass)
+                return RedirectToAction("Index", "Home");
+
+            TagModel model = new TagModel(pId);
+            model.RemoveFromDB();
+
+            return RedirectToAction("TagsListView", new { pPass = "Amaterassu11071959" });
+        }
+
+        public ActionResult TypesListView(string pPass)
+        {
+            if (mPass != pPass)
+                return RedirectToAction("Index", "Home");
+
+
+            InCityDBEntities1 db = new InCityDBEntities1();
+            List<TypeModel> model = new List<TypeModel>();
+            List<Type> types = db.Type.ToList();
+
+            foreach (var type in types)
+                model.Add(new TypeModel(type));
+
+            return View(model);
+        }
+
+        public ActionResult NewType(string pPass, int pId = 0)
+        {
+            if (mPass != pPass)
+                return RedirectToAction("Index", "Home");
+
+            InCityDBEntities1 db = new InCityDBEntities1();
+            TypeModel model;
+
+            if (pId != 0)
+                model = new TypeModel(db.Type.First(t => t.Id == pId));
+            else
+                model = new TypeModel();
+
+            return View(model);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult NewTypeSave(TypeModel pModel)
+        {
+            pModel.SaveInDB();
+            return RedirectToAction("TypesListView", new { pPass = "Amaterassu11071959" });
+        }
+
+        public ActionResult RemoveType(int pId, string pPass)
+        {
+            if (mPass != pPass)
+                return RedirectToAction("Index", "Home");
+
+            TypeModel model = new TypeModel(pId);
+            model.RemoveFromDB();
+
+            return RedirectToAction("TypesListView", new { pPass = "Amaterassu11071959" });
+        }
     }
 }

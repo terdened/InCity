@@ -305,6 +305,10 @@
     <Content Include="Views\ContentFiller\TypesList.cshtml" />
     <Content Include="Views\ContentFiller\EventsList.cshtml" />
     <Content Include="Views\ContentFiller\PlacesList.cshtml" />
+    <Content Include="Views\ContentFiller\TagsListView.cshtml" />
+    <Content Include="Views\ContentFiller\NewTag.cshtml" />
+    <Content Include="Views\ContentFiller\TypesListView.cshtml" />
+    <Content Include="Views\ContentFiller\NewType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<InCity.Models.TypeModel>
+
+@{
+    ViewBag.Title = "Список тегов";
+}
+
+<h2>Список тегов</h2>
+
+<p>
+    @Html.ActionLink("Создать", "NewType", new { pPass = "Amaterassu11071959" })
+</p>
+<table class="table">
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.mTitle)
+            [ 
+            @Html.ActionLink("Изменить", "NewType", new { pId = item.mId, pPass = "Amaterassu11071959" }) |
+            @Html.ActionLink("Удалить", "RemoveType", new { pId = item.mId, pPass = "Amaterassu11071959" })
+             ]
+        </td>
+    </tr>
+}
+
+</table>
+
+<div>
+    @Html.ActionLink("Назад к панели администратора", "Index", new { pPass = "Amaterassu11071959" })
+</div>
