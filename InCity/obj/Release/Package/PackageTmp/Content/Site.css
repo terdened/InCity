@@ -52,6 +52,34 @@ textarea {
     cursor:pointer;
 }
 
+.save-btn {
+    color: #333; /* Цвет ссылок */
+    background-color: #eee; /* Цвет фона под ссылкой */
+    transition: 0.4s;
+    text-align: center;
+    padding: 0px
+}
+
+.save-btn:hover {
+    background-color: #428bca; /* Цвет фона под ссылкой */
+    color: #ffffff; /* Цвет ссылки */
+    cursor:pointer;
+}
+
+.cancel-btn {
+    color: #333; /* Цвет ссылок */
+    background-color: #eee; /* Цвет фона под ссылкой */
+    transition: 0.4s;
+    text-align: center;
+    padding: 0px
+}
+
+.cancel-btn:hover {
+    background-color: #ac3b3b; /* Цвет фона под ссылкой */
+    color: #ffffff; /* Цвет ссылки */
+    cursor:pointer;
+}
+
 .tag-selected-btn {
     background-color: #428bca; /* Цвет фона под ссылкой */
     color: #ffffff; /* Цвет ссылки */

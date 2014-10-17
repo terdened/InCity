@@ -96,6 +96,19 @@ namespace InCity.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult NewEventRemoveImage(CreateEventViewModel pModel)
+        {
+            pModel.mPosterId = 0;
+            return NewEvent(pModel);
+        }
+
+        public ActionResult NewPlaceRemoveImage(CreatePlaceViewModel pModel)
+        {
+            pModel.mHeaderId = 0;
+            return NewPlace(pModel);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult NewEventSave(CreateEventViewModel pModel)
         {
             pModel.SaveInDB();

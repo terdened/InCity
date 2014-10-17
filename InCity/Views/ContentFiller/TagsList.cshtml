@@ -1,36 +1,39 @@
 ﻿@model InCity.Models.CreateEventViewModel
 
-<table width="100%">
-    <tr>
-        <td>
-            Теги:
-        </td>
-    </tr>
-    @for (int i = 0; i < Model.mEventTag.Count; i++)
-    {
-        <tr>
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <td>
-                <div class="col-md-2">
-                    @{
-                        List<SelectListItem> tagList = new List<SelectListItem>();
-                        foreach (var tag in Model.mTagsList)
-                        {
-                            if (Model.mEventTag[i].mId == tag.mId)
+@if(Model.mEventTag.Count>0)
+{ 
+    <table width="100%">
+        @for (int i = 0; i < Model.mEventTag.Count; i++)
+        {
+            <tr>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <td style="padding:10px;">
+                    <div class="col-md-2">
+                        @{
+                            List<SelectListItem> tagList = new List<SelectListItem>();
+                            foreach (var tag in Model.mTagsList)
                             {
-                                tagList.Add(new SelectListItem() { Text = tag.mTitle, Value = tag.mId.ToString(), Selected = true });
-                            }
-                            else
-                            {
-                                tagList.Add(new SelectListItem() { Text = tag.mTitle, Value = tag.mId.ToString(), Selected = false });
-                            }
+                                if (Model.mEventTag[i].mId == tag.mId)
+                                {
+                                    tagList.Add(new SelectListItem() { Text = tag.mTitle, Value = tag.mId.ToString(), Selected = true });
+                                }
+                                else
+                                {
+                                    tagList.Add(new SelectListItem() { Text = tag.mTitle, Value = tag.mId.ToString(), Selected = false });
+                                }
                                 
+                            }
+                            @Html.DropDownListFor(model => model.mEventTag[i].mId, tagList);
                         }
-                        @Html.DropDownListFor(model => model.mEventTag[i].mId, tagList);
-                    }
-                </div>
-            </td>
-        </tr>
-    }
-</table>
-
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p style="padding-left: 15px; font-size:17px">
+        Добавьте тег
+    </p>
+}

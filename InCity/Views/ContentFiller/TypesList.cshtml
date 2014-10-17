@@ -1,36 +1,39 @@
 ﻿@model InCity.Models.CreatePlaceViewModel
 
-<table width="100%">
-    <tr>
-        <td>
-            Типы:
-        </td>
-    </tr>
-    @for (int i = 0; i < Model.mPlaceType.Count; i++)
-    {
-        <tr>
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <td>
-                <div class="col-md-2">
-                    @{
+@if(Model.mPlaceType.Count>0)
+{ 
+    <table width="100%">
+        @for (int i = 0; i < Model.mPlaceType.Count; i++)
+        {
+            <tr>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <td>
+                    <div class="col-md-2">
+                        @{
                         
-                        List<SelectListItem> typesList = new List<SelectListItem>();
-                        foreach (var type in Model.mTypesList)
-                        {
-                            if (Model.mPlaceType[i].mId == type.mId)
+                            List<SelectListItem> typesList = new List<SelectListItem>();
+                            foreach (var type in Model.mTypesList)
                             {
-                                typesList.Add(new SelectListItem() { Text = type.mTitle, Value = type.mId.ToString(), Selected = true });
+                                if (Model.mPlaceType[i].mId == type.mId)
+                                {
+                                    typesList.Add(new SelectListItem() { Text = type.mTitle, Value = type.mId.ToString(), Selected = true });
+                                }
+                                else
+                                {
+                                    typesList.Add(new SelectListItem() { Text = type.mTitle, Value = type.mId.ToString(), Selected = false });
+                                }
                             }
-                            else
-                            {
-                                typesList.Add(new SelectListItem() { Text = type.mTitle, Value = type.mId.ToString(), Selected = false });
-                            }
+                            @Html.DropDownListFor(model => model.mPlaceType[i].mId, typesList);
                         }
-                        @Html.DropDownListFor(model => model.mPlaceType[i].mId, typesList);
-                    }
-                </div>
-            </td>
-        </tr>
-    }
-</table>
-
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p style="padding-left: 30px; font-size:17px">
+        Добавьте тип
+    </p>
+}

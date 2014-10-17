@@ -11,7 +11,7 @@
 
 <h2>Новое событие</h2>
 
-@using (Html.BeginForm("NewEvent", "ContentFiller", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("NewEvent", "ContentFiller", FormMethod.Post, new { enctype = "multipart/form-data", name = "myform" }))
 {
     <div id="result">
         @Html.AntiForgeryToken()
@@ -38,7 +38,7 @@
 
             <div class="form-group">
                 <div class="control-label col-md-2"><b>Постер</b></div>
-                <div class="col-md-10">
+                <div class="col-md-10" style="margin-top: 5px">
                     @if (Model.mPosterId == 0)
                     {
                         <input type="file" name="file" id="file" style="width: 100%; display: inline" />
@@ -46,36 +46,66 @@
                     }
                     else
                     {
-                        InCityDBEntities1 db = new InCityDBEntities1();
-                        string imagePath = db.Pictures.First(p => p.Id == Model.mPosterId).Path;
                         @Html.HiddenFor(model => model.mPosterId)
-                        @:<img src="@imagePath" />
+                        <div style="display: inline; font-size:17px; ">
+                            @Model.mPosterId
+                            .jpg
+                            <div class="cancel-btn" style="display: inline; padding:10px">
+                                <span class="glyphicon glyphicon-trash" onclick="document.myform.action='@Url.Action("NewEventRemoveImage")'; document.myform.submit();"></span>
+                            </div>
+                        </div>
                     }
                     
                 </div>
             </div>
 
-            <div class="form-group">
+            <table width="100%" style="background-color: #eee; padding: 10px">
+                <tr>
+                    <td width="100px" style="padding-left: 15px; padding-right: 10px">
+                        <h3>Места</h3>
+                    </td>
+                    <td width="60px" class="save-btn" onclick="document.myform.action='@Url.Action("NewEventAddPlace")'; document.myform.submit();">
+                        <h3><span class="glyphicon glyphicon-plus"></span></h3>
+                    </td>
+                    <td width ="60px" class="cancel-btn" onclick="document.myform.action='@Url.Action("NewEventRemovePlace")'; document.myform.submit();">
+                        <h3><span class="glyphicon glyphicon-minus"></span></h3>
+                    </td>
+                    <td></td>
+                </tr>
+            </table> 
+            <div>
                 @{Html.RenderPartial("EventPlacesList", Model);}
             </div>
 
-            <div class="form-group">
+            <table width="100%" style="background-color: #eee; padding: 10px">
+                <tr>
+                    <td width="100px" style="padding-left: 15px; padding-right: 10px">
+                        <h3>Теги</h3>
+                    </td>
+                    <td width="60px" class="save-btn" onclick="document.myform.action='@Url.Action("NewEventAddTag")'; document.myform.submit();">
+                        <h3><span class="glyphicon glyphicon-plus"></span></h3>
+                    </td>
+                    <td width="60px" class="cancel-btn" onclick="document.myform.action='@Url.Action("NewEventRemoveTag")'; document.myform.submit();">
+                        <h3><span class="glyphicon glyphicon-minus"></span></h3>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+
+            <div>
                 @{Html.RenderPartial("TagsList", Model);}
             </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Добавить место" formaction="@Url.Action("NewEventAddPlace")" class="btn btn-default" />
-                    <input type="submit" value="Удалить место" formaction="@Url.Action("NewEventRemovePlace")" class="btn btn-default" />
-                    <input type="submit" value="Добавить тег" formaction="@Url.Action("NewEventAddTag")" class="btn btn-default" />
-                    <input type="submit" value="Удалить тег" formaction="@Url.Action("NewEventRemoveTag")" class="btn btn-default" />
-                    <input type="submit" value="Создать" formaction="@Url.Action("NewEventSave")"  class="btn btn-default" />
-                </div>
-            </div>
+            <table width="100%">
+                <tr>
+                    <td width="50%" class="cancel-btn" onclick="location.href='/ContentFiller?pPass=Amaterassu11071959'" style="padding: 5px;">
+                        <h3><span class="glyphicon glyphicon-remove"></span></h3>
+                    </td>
+                    <td width="50%" class="save-btn" onclick="document.myform.action='@Url.Action("NewEventSave")'; document.myform.submit();" style="padding: 5px;">
+                        <h3><span class="glyphicon glyphicon-ok"></span></h3>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Назад к панели администратора", "Index", new { pPass = "Amaterassu11071959" })
-</div>

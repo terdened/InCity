@@ -11,7 +11,7 @@
 
 <h2>Новое место</h2>
 
-@using (Html.BeginForm("NewPlace", "ContentFiller", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("NewPlace", "ContentFiller", FormMethod.Post, new { enctype = "multipart/form-data", name = "myform" }))
 {
     <div id="result">
         @Html.AntiForgeryToken()
@@ -60,29 +60,46 @@
                     }
                     else
                     {
-                        InCityDBEntities1 db = new InCityDBEntities1();
-                        string imagePath = db.Pictures.First(p => p.Id == Model.mHeaderId).Path;
                         @Html.HiddenFor(model => model.mHeaderId)
-                        @:<img src="@imagePath" />
+                        <div style="display: inline; font-size:17px; ">
+                            @Model.mHeaderId
+                            .jpg
+                            <div class="cancel-btn" style="display: inline; padding:10px">
+                                <span class="glyphicon glyphicon-trash" onclick="document.myform.action='@Url.Action("NewPlaceRemoveImage")'; document.myform.submit();"></span>
+                            </div>
+                        </div>
                     }
                 </div>
             </div>
 
+            <table width="100%" style="background-color: #eee; padding: 10px">
+                <tr>
+                    <td width="100px" style="padding-left: 15px; padding-right: 10px">
+                        <h3>Типы</h3>
+                    </td>
+                    <td width="60px" class="save-btn" onclick="document.myform.action='@Url.Action("NewPlaceAddType")'; document.myform.submit();">
+                        <h3><span class="glyphicon glyphicon-plus"></span></h3>
+                    </td>
+                    <td width="60px" class="cancel-btn" onclick="document.myform.action='@Url.Action("NewPlaceRemoveType")'; document.myform.submit();">
+                        <h3><span class="glyphicon glyphicon-minus"></span></h3>
+                    </td>
+                    <td></td>
+                </tr>
+            </table> 
             <div class="form-group">
                 @{Html.RenderPartial("TypesList", Model);}
             </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Добавить тип" formaction="@Url.Action("NewPlaceAddType")" class="btn btn-default" />
-                    <input type="submit" value="Удалить тип" formaction="@Url.Action("NewPlaceRemoveType")" class="btn btn-default" />
-                    <input type="submit" value="Создать" formaction="@Url.Action("NewPlaceSave")"  class="btn btn-default" />
-                </div>
-            </div>
+            <table width="100%">
+                <tr>
+                    <td width="50%" class="cancel-btn" onclick="location.href='/ContentFiller?pPass=Amaterassu11071959'" style="padding: 5px;">
+                        <h3><span class="glyphicon glyphicon-remove"></span></h3>
+                    </td>
+                    <td width="50%" class="save-btn" onclick="document.myform.action='@Url.Action("NewPlaceSave")'; document.myform.submit();" style="padding: 5px;">
+                        <h3><span class="glyphicon glyphicon-ok"></span></h3>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Назад к панели администратора", "Index", new { pPass = "Amaterassu11071959" })
-</div>

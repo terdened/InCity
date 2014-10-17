@@ -6,31 +6,28 @@
 
 <h2>Новый тег</h2>
 
-@using (Html.BeginForm("NewTagSave", "ContentFiller", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+@using (Html.BeginForm("NewTagSave", "ContentFiller", FormMethod.Post, new { enctype = "multipart/form-data", name = "myform" })) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
         @Html.HiddenFor(model => model.mId)
 
-        <div class="row">
-            <div class="col-md-1">
-                <h3>Тег</h3>
-            </div>
-            <div class="col-md-4">
-                @Html.EditorFor(model => model.mTitle, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mTitle, "", new { @class = "text-danger" })
-            </div>
+        <div style="padding: 10px">
+            <h3 style="display:inline">Заголовок</h3>
+            @Html.EditorFor(model => model.mTitle, new { htmlAttributes = new { @class = "form-control", style = "margin-left: 5px; display:inline;" } })
+            @Html.ValidationMessageFor(model => model.mTitle, "", new { @class = "text-danger" })
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Сохранить" class="btn btn-default" />
-            </div>
-        </div>
+        <table width="100%">
+            <tr>
+                <td width="50%" class="cancel-btn" onclick="location.href='/ContentFiller?pPass=Amaterassu11071959'" style="padding: 5px;">
+                    <h3><span class="glyphicon glyphicon-remove"></span></h3>
+                </td>
+                <td width="50%" class="save-btn" onclick="document.myform.submit();" style="padding: 5px;">
+                    <h3><span class="glyphicon glyphicon-ok"></span></h3>
+                </td>
+            </tr>
+        </table>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Назад к панели администратора", "Index", new { pPass = "Amaterassu11071959" })
-</div>
