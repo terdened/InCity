@@ -1,7 +1,9 @@
 ﻿using InCity.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -9,6 +11,10 @@ namespace InCity.Controllers
 {
     public class EventController : Controller
     {
+        public EventController()
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
+        }
         // GET: Event
         public ActionResult Index()
         {

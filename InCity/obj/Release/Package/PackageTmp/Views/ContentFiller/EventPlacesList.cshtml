@@ -1,5 +1,9 @@
 ﻿@model InCity.Models.CreateEventViewModel
 
+<link rel="stylesheet" href="~/Content/pickmeup.css" type="text/css" />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.pickmeup.js"></script>
+
 <table width="100%">
     <tr>
         <td>
@@ -27,12 +31,26 @@
                         </td>
                         <td>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(model => model.mEventPlaces[i].mStartDate, "{0:d}")
+                                @Html.TextBoxFor(model => model.mEventPlaces[i].mStartDate, "{0:d}", new { @class="start-date" })
+                                <script>
+                                    $('.start-date').pickmeup({
+                                        format: 'd/m/Y',
+                                        position: 'down',
+                                        hide_on_select: true
+                                    });
+                                </script>
                             </div>
                         </td>
                         <td>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(model => model.mEventPlaces[i].mEndDate, "{0:d}")
+                                @Html.TextBoxFor(model => model.mEventPlaces[i].mEndDate, "{0:d}", new { @class = "end-date" })
+                                <script>
+                                    $('.end-date').pickmeup({
+                                        format: 'd/m/Y',
+                                        position: 'down',
+                                        hide_on_select: true
+                                    });
+                                </script>
                             </div>
                         </td>
                         <td>

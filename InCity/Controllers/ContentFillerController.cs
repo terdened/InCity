@@ -1,8 +1,10 @@
 ﻿using InCity.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,6 +12,11 @@ namespace InCity.Controllers
 {
     public class ContentFillerController : Controller
     {
+        public ContentFillerController()
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
+        }
+
         string mPass = "Amaterassu11071959";
 
         public ActionResult Index(string pPass)

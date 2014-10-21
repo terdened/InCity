@@ -4,11 +4,6 @@
     ViewBag.Title = "Новое событие";
 }
 
-<script src="../../Scripts/jquery-1.10.2.js"></script>
-<script src="../../Scripts/bootstrap-datepicker.js"></script>
-<link href="../../Content/datepicker.css" rel="stylesheet" type="text/css" />
-
-
 <h2>Новое событие</h2>
 
 @using (Html.BeginForm("NewEvent", "ContentFiller", FormMethod.Post, new { enctype = "multipart/form-data", name = "myform" }))
@@ -98,7 +93,7 @@
 
             <table width="100%">
                 <tr>
-                    <td width="50%" class="cancel-btn" onclick="location.href='/ContentFiller?pPass=Amaterassu11071959'" style="padding: 5px;">
+                    <td width="50%" class="cancel-btn" onclick="location.href='@Url.Action("Index", new { pPass = "Amaterassu11071959" })'" style="padding: 5px;">
                         <h3><span class="glyphicon glyphicon-remove"></span></h3>
                     </td>
                     <td width="50%" class="save-btn" onclick="document.myform.action='@Url.Action("NewEventSave")'; document.myform.submit();" style="padding: 5px;">
